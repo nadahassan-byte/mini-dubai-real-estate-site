@@ -75,6 +75,14 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: 0.01em
   border-bottom-color: var(--line-dk);
 }
 
+/* Inner pages sit on a light background, so keep the header solid (and the
+   light nav text legible) at all times — independent of scroll position. */
+.page-listings .site-header {
+  background: rgba(17, 17, 20, 0.97);
+  backdrop-filter: saturate(160%) blur(12px);
+  border-bottom: 1px solid var(--line-dk);
+}
+
 .nav-toggle {
   display: none; background: none; border: 0; color: #fff; font-size: 1.5rem; cursor: pointer;
 }
@@ -272,7 +280,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: 0.01em
   display: flex; align-items: flex-end; color: #fff;
 }
 .hood-img {
-  position: absolute; inset: 0; background: var(--img) center/cover no-repeat;
+  position: absolute; inset: 0; background: #c9c2b4 var(--img) center/cover no-repeat;
   transition: transform 1s var(--ease);
 }
 .hood:hover .hood-img { transform: scale(1.08); }
