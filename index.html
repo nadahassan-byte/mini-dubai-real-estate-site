@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prime — Luxury Property in Dubai</title>
-  <meta name="description" content="The source for Dubai luxury real estate. Curated apartments, villas and penthouses across the city's most prestigious neighbourhoods." />
+  <title>PRIME — Luxury Property in Dubai</title>
+  <meta name="description" content="PRIME by betterhomes — the source for Dubai luxury real estate. Curated apartments, villas and penthouses across the city's most prestigious neighbourhoods." />
   <link rel="preconnect" href="https://images.unsplash.com" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,14 +15,23 @@
   <!-- Header -->
   <header class="site-header" id="top">
     <div class="container header-inner">
-      <a href="#top" class="brand" aria-label="Prime — luxury property in Dubai">Prime</a>
+      <a href="index.html#top" class="brand" aria-label="PRIME by betterhomes — home">
+        <img src="assets/prime-logo-light.png" alt="PRIME by betterhomes" class="brand-logo" />
+      </a>
       <nav class="nav" aria-label="Primary">
-        <a href="#listings">Listings</a>
-        <a href="#neighbourhoods">Neighbourhoods</a>
-        <a href="#about">About</a>
-        <a href="#contact" class="nav-cta">Contact</a>
+        <a href="listings.html">Properties</a>
+        <a href="index.html#neighbourhoods">Neighbourhoods</a>
+        <a href="index.html#calculator">Mortgage</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact" class="nav-cta">Contact</a>
       </nav>
-      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      <div class="header-actions">
+        <button class="nav-saved" data-saved-open aria-label="View saved properties">
+          <span class="nav-saved-heart" aria-hidden="true">♥</span>
+          <span class="saved-count" data-fav-count>0</span>
+        </button>
+        <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      </div>
     </div>
   </header>
 
@@ -32,7 +41,7 @@
       <p class="eyebrow" data-reveal>The source for Dubai luxury real estate</p>
       <h1 data-reveal data-reveal-delay="1">A collection of the city's<br />most exceptional homes</h1>
       <p class="hero-sub" data-reveal data-reveal-delay="2">Curated apartments, villas and penthouses across Downtown, Marina, Palm Jumeirah and beyond — represented with discretion and care.</p>
-      <a href="#listings" class="btn hero-cta" data-reveal data-reveal-delay="3">View the collection</a>
+      <a href="listings.html" class="btn hero-cta" data-reveal data-reveal-delay="3">View the collection</a>
       <div class="hero-stats" data-reveal data-reveal-delay="3">
         <div><strong>450+</strong><span>Active listings</span></div>
         <div><strong>18</strong><span>Neighbourhoods</span></div>
@@ -42,29 +51,24 @@
     <div class="scroll-cue">Scroll</div>
   </section>
 
-  <!-- Listings -->
   <main>
-    <section class="section" id="listings">
+    <!-- Featured carousel -->
+    <section class="section" id="featured">
       <div class="container">
         <div class="section-head" data-reveal>
           <p class="eyebrow">Featured collection</p>
           <div class="row">
-            <h2>Properties of distinction</h2>
-            <div class="filters" role="group" aria-label="Filter by type">
-              <button class="chip is-active" data-filter="all">All</button>
-              <button class="chip" data-filter="Apartment">Apartments</button>
-              <button class="chip" data-filter="Villa">Villas</button>
-              <button class="chip" data-filter="Penthouse">Penthouses</button>
+            <h2>Exclusive listings to PRIME</h2>
+            <div class="ex-arrows">
+              <button class="ex-arrow" data-ex-prev aria-label="Previous">‹</button>
+              <button class="ex-arrow" data-ex-next aria-label="Next">›</button>
             </div>
           </div>
-          <form class="listing-search" id="search-form">
-            <input type="text" id="search-input" placeholder="Search by area, title or type, e.g. Dubai Marina…" aria-label="Search listings" />
-            <button type="submit">Search</button>
-          </form>
         </div>
-        <div class="grid" id="listings-grid"><!-- cards injected by script.js --></div>
-        <p class="empty" id="empty-state" hidden>No properties match your search.</p>
-        <div class="grid-foot" data-reveal><a href="#contact" class="link-gold">Enquire about the full portfolio</a></div>
+      </div>
+      <div class="ex-track" id="ex-track"><!-- cards injected --></div>
+      <div class="container">
+        <div class="grid-foot" data-reveal><a href="listings.html" class="link-gold">View all properties</a></div>
       </div>
     </section>
 
@@ -77,10 +81,55 @@
           <h2>Distinguished neighbourhoods</h2>
         </div>
         <div class="hoods">
-          <a class="hood" href="#listings" data-hood="Downtown Dubai" data-reveal style="--img:url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=70')"><div class="hood-img"></div><span>Downtown Dubai</span><span class="hood-cta">View properties</span></a>
-          <a class="hood" href="#listings" data-hood="Dubai Marina" data-reveal data-reveal-delay="1" style="--img:url('https://images.unsplash.com/photo-1582672060674-bc2bd808a8f5?auto=format&fit=crop&w=800&q=70')"><div class="hood-img"></div><span>Dubai Marina</span><span class="hood-cta">View properties</span></a>
-          <a class="hood" href="#listings" data-hood="Palm Jumeirah" data-reveal data-reveal-delay="2" style="--img:url('https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=800&q=70')"><div class="hood-img"></div><span>Palm Jumeirah</span><span class="hood-cta">View properties</span></a>
-          <a class="hood" href="#listings" data-hood="Business Bay" data-reveal data-reveal-delay="3" style="--img:url('https://images.unsplash.com/photo-1546412414-e1885259563a?auto=format&fit=crop&w=800&q=70')"><div class="hood-img"></div><span>Business Bay</span><span class="hood-cta">View properties</span></a>
+          <a class="hood" href="listings.html?location=Downtown%20Dubai" data-reveal style="--img:url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=70')"><div class="hood-img"></div><span>Downtown Dubai</span><span class="hood-cta">View properties</span></a>
+          <a class="hood" href="listings.html?location=Dubai%20Marina" data-reveal data-reveal-delay="1" style="--img:url('https://images.unsplash.com/photo-1582672060674-bc2bd808a8f5?auto=format&fit=crop&w=800&q=70')"><div class="hood-img"></div><span>Dubai Marina</span><span class="hood-cta">View properties</span></a>
+          <a class="hood" href="listings.html?location=Palm%20Jumeirah" data-reveal data-reveal-delay="2" style="--img:url('https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=800&q=70')"><div class="hood-img"></div><span>Palm Jumeirah</span><span class="hood-cta">View properties</span></a>
+          <a class="hood" href="listings.html?location=Business%20Bay" data-reveal data-reveal-delay="3" style="--img:url('https://images.unsplash.com/photo-1546412414-e1885259563a?auto=format&fit=crop&w=800&q=70')"><div class="hood-img"></div><span>Business Bay</span><span class="hood-cta">View properties</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mortgage calculator -->
+    <section class="section" id="calculator">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Plan your purchase</p>
+          <div class="row"><h2>Mortgage calculator</h2></div>
+          <p class="muted">Estimate your monthly payment. Adjust the figures to match your plans.</p>
+        </div>
+        <div class="mc" id="mc" data-reveal>
+          <div class="mc-form">
+            <span class="mc-grouplabel">Residency status</span>
+            <div class="mc-tabs" role="tablist" aria-label="Residency status">
+              <button class="mc-tab is-active" data-res="resident" role="tab" aria-selected="true">UAE Resident</button>
+              <button class="mc-tab" data-res="national" role="tab" aria-selected="false">UAE National</button>
+              <button class="mc-tab" data-res="nonresident" role="tab" aria-selected="false">Non-Resident</button>
+            </div>
+            <div class="mc-field">
+              <label for="mc-price">Property value</label>
+              <div class="mc-input"><input id="mc-price" inputmode="numeric" value="2,950,000" /><span>AED</span></div>
+            </div>
+            <div class="mc-field">
+              <label for="mc-down">Down payment <em id="mc-down-pct">20%</em></label>
+              <div class="mc-input"><input id="mc-down" inputmode="numeric" value="590,000" /><span>AED</span></div>
+            </div>
+            <div class="mc-field">
+              <label for="mc-rate">Interest rate</label>
+              <div class="mc-input"><input id="mc-rate" inputmode="decimal" value="4.25" /><span>%</span></div>
+            </div>
+            <div class="mc-field">
+              <label for="mc-term">Loan duration <em id="mc-term-val">25 Years</em></label>
+              <input id="mc-term" class="mc-range" type="range" min="5" max="30" step="1" value="25" />
+            </div>
+          </div>
+          <div class="mc-result">
+            <p class="mc-result-label">Loan amount</p>
+            <p class="mc-result-big" id="mc-loan">2,360,000 AED</p>
+            <p class="mc-result-label">Estimated monthly payment</p>
+            <p class="mc-result-big is-gold" id="mc-monthly">0 AED</p>
+            <p class="mc-note">Indicative only, based on the figures you enter. Speak to an advisor for tailored mortgage options.</p>
+            <a href="#contact" class="btn">Speak to an advisor</a>
+          </div>
         </div>
       </div>
     </section>
@@ -149,21 +198,13 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <span class="brand">Prime</span>
-      <p class="muted">© <span id="year"></span> Prime. Demo project — listings are illustrative.</p>
+      <img src="assets/prime-logo-light.png" alt="PRIME by betterhomes" class="footer-logo" />
+      <p class="muted">© <span id="year"></span> PRIME by betterhomes. Demo project — listings are illustrative.</p>
     </div>
   </footer>
 
-  <!-- Property detail modal -->
-  <div class="modal" id="modal" hidden>
-    <div class="modal-backdrop" data-close></div>
-    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <button class="modal-close" data-close aria-label="Close">✕</button>
-      <div class="modal-body" id="modal-body"><!-- injected --></div>
-    </div>
-  </div>
-
   <script src="data.js"></script>
-  <script src="script.js"></script>
+  <script src="app.js"></script>
+  <script src="home.js"></script>
 </body>
 </html>

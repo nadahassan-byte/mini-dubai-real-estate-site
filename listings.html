@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Properties — PRIME by betterhomes</title>
+  <meta name="description" content="Browse PRIME's Dubai property collection. Filter by location and property type, save favourites and compare homes side by side." />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="page-listings">
+  <!-- Header -->
+  <header class="site-header scrolled" id="top">
+    <div class="container header-inner">
+      <a href="index.html#top" class="brand" aria-label="PRIME by betterhomes — home">
+        <img src="assets/prime-logo-light.png" alt="PRIME by betterhomes" class="brand-logo" />
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="listings.html" class="is-current">Properties</a>
+        <a href="index.html#neighbourhoods">Neighbourhoods</a>
+        <a href="index.html#calculator">Mortgage</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact" class="nav-cta">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <button class="nav-saved" data-saved-open aria-label="View saved properties">
+          <span class="nav-saved-heart" aria-hidden="true">♥</span>
+          <span class="saved-count" data-fav-count>0</span>
+        </button>
+        <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="listings-main">
+    <section class="listings-hero">
+      <div class="container">
+        <p class="eyebrow">The collection</p>
+        <h1>Dubai properties</h1>
+        <p class="muted">Filter by location and property type. Save the ones you love and compare them side by side.</p>
+      </div>
+    </section>
+
+    <section class="section listings-section">
+      <div class="container">
+        <!-- Filters -->
+        <form class="filters-bar" id="filters" onsubmit="return false">
+          <div class="filter">
+            <label for="f-location">Location</label>
+            <select id="f-location"><option value="all">All locations</option></select>
+          </div>
+          <div class="filter">
+            <label for="f-type">Property type</label>
+            <select id="f-type"><option value="all">All types</option></select>
+          </div>
+          <div class="filter">
+            <label for="f-status">Status</label>
+            <select id="f-status">
+              <option value="all">For sale &amp; rent</option>
+              <option value="For Sale">For sale</option>
+              <option value="For Rent">For rent</option>
+            </select>
+          </div>
+          <div class="filter filter-grow">
+            <label for="f-search">Search</label>
+            <input id="f-search" type="text" placeholder="Area, title or type…" />
+          </div>
+          <button type="button" class="link-muted" id="f-clear">Clear all</button>
+        </form>
+
+        <p class="result-count" id="result-count" data-reveal>0 properties</p>
+        <div class="grid" id="listings-grid"><!-- cards injected --></div>
+        <p class="empty" id="empty-state" hidden>No properties match your filters. <button class="link-gold" id="f-clear-2" onclick="document.getElementById('f-clear').click()">Clear filters</button></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <img src="assets/prime-logo-light.png" alt="PRIME by betterhomes" class="footer-logo" />
+      <p class="muted">© <span id="year"></span> PRIME by betterhomes. Demo project — listings are illustrative.</p>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script src="listings.js"></script>
+</body>
+</html>
