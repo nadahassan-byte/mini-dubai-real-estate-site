@@ -2,6 +2,22 @@
 (function () {
   "use strict";
 
+  // Bulletproof imagery: if any photo fails to load (e.g. a removed stock
+  // image), swap in an elegant on-brand gradient instead of a broken icon.
+  const IMG_FALLBACK = "data:image/svg+xml," + encodeURIComponent(
+    "<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='900'>" +
+    "<defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>" +
+    "<stop offset='0' stop-color='#2a2d33'/><stop offset='1' stop-color='#14161a'/></linearGradient></defs>" +
+    "<rect width='1200' height='900' fill='url(#g)'/>" +
+    "<g fill='rgba(192,130,63,0.10)'>" +
+    "<rect x='220' y='360' width='150' height='540'/><rect x='430' y='250' width='200' height='650'/>" +
+    "<rect x='700' y='420' width='120' height='480'/><rect x='860' y='300' width='210' height='600'/></g></svg>"
+  );
+  document.addEventListener("error", (e) => {
+    const t = e.target;
+    if (t && t.tagName === "IMG" && !t.dataset.fb) { t.dataset.fb = "1"; t.src = IMG_FALLBACK; }
+  }, true);
+
   const LISTINGS = window.LISTINGS || [];
   const byId = (id) => LISTINGS.find((l) => l.id === Number(id));
 

@@ -95,7 +95,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: 0.01em
 .hero::before {
   content: ""; position: absolute; inset: 0;
   background:
-    linear-gradient(180deg, rgba(10,10,12,.55) 0%, rgba(10,10,12,.35) 40%, rgba(10,10,12,.8) 100%),
+    linear-gradient(180deg, rgba(9,9,11,.62) 0%, rgba(9,9,11,.40) 38%, rgba(9,9,11,.90) 100%),
     url("https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=2000&q=80") center/cover no-repeat;
   transform: scale(1.05);
   animation: heroZoom 18s var(--ease) forwards;
