@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dubai Estates — Premium Property in Dubai</title>
-  <meta name="description" content="Discover premium apartments, villas and penthouses for sale and rent across Dubai's most sought-after neighbourhoods." />
+  <title>Prime — Luxury Property in Dubai</title>
+  <meta name="description" content="The source for Dubai luxury real estate. Curated apartments, villas and penthouses across the city's most prestigious neighbourhoods." />
   <link rel="preconnect" href="https://images.unsplash.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <!-- Header -->
   <header class="site-header" id="top">
     <div class="container header-inner">
-      <a href="#top" class="brand">
-        <span class="brand-mark">◆</span> Dubai<span>Estates</span>
-      </a>
+      <a href="#top" class="brand" aria-label="Prime — luxury property in Dubai">Prime</a>
       <nav class="nav" aria-label="Primary">
         <a href="#listings">Listings</a>
         <a href="#neighbourhoods">Neighbourhoods</a>
@@ -28,70 +29,77 @@
   <!-- Hero -->
   <section class="hero">
     <div class="container hero-inner">
-      <p class="eyebrow">Dubai · UAE</p>
-      <h1>Find your place in the city of the future</h1>
-      <p class="hero-sub">Hand-picked apartments, villas and penthouses across Downtown, Marina, Palm Jumeirah and beyond.</p>
-      <form class="hero-search" id="search-form">
+      <p class="eyebrow" data-reveal>The source for Dubai luxury real estate</p>
+      <h1 data-reveal data-reveal-delay="1">A collection of the city's<br />most exceptional homes</h1>
+      <p class="hero-sub" data-reveal data-reveal-delay="2">Curated apartments, villas and penthouses across Downtown, Marina, Palm Jumeirah and beyond — represented with discretion and care.</p>
+      <form class="hero-search" id="search-form" data-reveal data-reveal-delay="3">
         <input type="text" id="search-input" placeholder="Search by area, e.g. Dubai Marina…" aria-label="Search listings" />
         <button type="submit">Search</button>
       </form>
-      <div class="hero-stats">
+      <div class="hero-stats" data-reveal data-reveal-delay="3">
         <div><strong>450+</strong><span>Active listings</span></div>
         <div><strong>18</strong><span>Neighbourhoods</span></div>
         <div><strong>12 yrs</strong><span>In the market</span></div>
       </div>
     </div>
+    <div class="scroll-cue">Scroll</div>
   </section>
 
   <!-- Listings -->
   <main>
     <section class="section" id="listings">
       <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Featured properties</h2>
-            <p class="muted">A curated selection of homes available right now.</p>
-          </div>
-          <div class="filters" role="group" aria-label="Filter by type">
-            <button class="chip is-active" data-filter="all">All</button>
-            <button class="chip" data-filter="Apartment">Apartments</button>
-            <button class="chip" data-filter="Villa">Villas</button>
-            <button class="chip" data-filter="Penthouse">Penthouses</button>
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Featured collection</p>
+          <div class="row">
+            <h2>Properties of distinction</h2>
+            <div class="filters" role="group" aria-label="Filter by type">
+              <button class="chip is-active" data-filter="all">All</button>
+              <button class="chip" data-filter="Apartment">Apartments</button>
+              <button class="chip" data-filter="Villa">Villas</button>
+              <button class="chip" data-filter="Penthouse">Penthouses</button>
+            </div>
           </div>
         </div>
         <div class="grid" id="listings-grid"><!-- cards injected by script.js --></div>
         <p class="empty" id="empty-state" hidden>No properties match your search.</p>
+        <div class="grid-foot" data-reveal><a href="#contact" class="link-gold">Enquire about the full portfolio</a></div>
       </div>
     </section>
 
     <!-- Neighbourhoods -->
     <section class="section section-alt" id="neighbourhoods">
       <div class="container">
-        <div class="section-head"><div><h2>Popular neighbourhoods</h2><p class="muted">Where Dubai lives, works and unwinds.</p></div></div>
+        <div class="section-head section-head--center" data-reveal>
+          <div class="divider"><span></span></div>
+          <p class="eyebrow">Where to live</p>
+          <h2>Distinguished neighbourhoods</h2>
+        </div>
         <div class="hoods">
-          <a class="hood" href="#listings" data-hood="Downtown Dubai" style="--img:url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=70')"><span>Downtown Dubai</span></a>
-          <a class="hood" href="#listings" data-hood="Dubai Marina" style="--img:url('https://images.unsplash.com/photo-1582672060674-bc2bd808a8f5?auto=format&fit=crop&w=800&q=70')"><span>Dubai Marina</span></a>
-          <a class="hood" href="#listings" data-hood="Palm Jumeirah" style="--img:url('https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=800&q=70')"><span>Palm Jumeirah</span></a>
-          <a class="hood" href="#listings" data-hood="Business Bay" style="--img:url('https://images.unsplash.com/photo-1546412414-e1885259563a?auto=format&fit=crop&w=800&q=70')"><span>Business Bay</span></a>
+          <a class="hood" href="#listings" data-hood="Downtown Dubai" data-reveal style="--img:url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=70')"><div class="hood-img"></div><span>Downtown Dubai</span><span class="hood-cta">View properties</span></a>
+          <a class="hood" href="#listings" data-hood="Dubai Marina" data-reveal data-reveal-delay="1" style="--img:url('https://images.unsplash.com/photo-1582672060674-bc2bd808a8f5?auto=format&fit=crop&w=800&q=70')"><div class="hood-img"></div><span>Dubai Marina</span><span class="hood-cta">View properties</span></a>
+          <a class="hood" href="#listings" data-hood="Palm Jumeirah" data-reveal data-reveal-delay="2" style="--img:url('https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=800&q=70')"><div class="hood-img"></div><span>Palm Jumeirah</span><span class="hood-cta">View properties</span></a>
+          <a class="hood" href="#listings" data-hood="Business Bay" data-reveal data-reveal-delay="3" style="--img:url('https://images.unsplash.com/photo-1546412414-e1885259563a?auto=format&fit=crop&w=800&q=70')"><div class="hood-img"></div><span>Business Bay</span><span class="hood-cta">View properties</span></a>
         </div>
       </div>
     </section>
 
     <!-- About -->
-    <section class="section" id="about">
+    <section class="section section-dark" id="about">
       <div class="container about">
-        <div>
-          <h2>About Dubai Estates</h2>
-          <p>We're a boutique Dubai brokerage pairing local market knowledge with a transparent, no-pressure approach. From a first studio in JVC to a beachfront villa on the Palm, our advisors guide you through every step — viewings, negotiation, paperwork and handover.</p>
+        <div data-reveal>
+          <p class="eyebrow">Our approach</p>
+          <h2>A boutique standard of service</h2>
+          <p>We pair deep local market knowledge with a transparent, unhurried approach. From a first studio in JVC to a beachfront villa on the Palm, our advisors guide you through every step — viewings, negotiation, paperwork and handover — with absolute discretion.</p>
           <ul class="ticks">
             <li>RERA-registered advisors</li>
             <li>End-to-end transaction support</li>
             <li>Off-plan &amp; ready properties</li>
           </ul>
         </div>
-        <div class="about-card">
+        <div class="about-card" data-reveal data-reveal-delay="1">
           <h3>Thinking of selling?</h3>
-          <p class="muted">Get a free, data-backed valuation of your Dubai property within 24 hours.</p>
+          <p>Receive a confidential, data-backed valuation of your Dubai property within 24 hours.</p>
           <a href="#contact" class="btn">Request a valuation</a>
         </div>
       </div>
@@ -100,16 +108,17 @@
     <!-- Contact -->
     <section class="section section-alt" id="contact">
       <div class="container contact">
-        <div>
-          <h2>Get in touch</h2>
-          <p class="muted">Tell us what you're looking for and an advisor will be in touch.</p>
+        <div data-reveal>
+          <p class="eyebrow">Enquiries</p>
+          <h2>Begin the conversation</h2>
+          <p class="muted">Tell us what you're looking for and an advisor will be in touch — discreetly and promptly.</p>
           <ul class="contact-list">
-            <li>📍 Marina Plaza, Dubai Marina, Dubai, UAE</li>
-            <li>📞 +971 4 000 0000</li>
-            <li>✉️ hello@dubaiestates.example</li>
+            <li>Marina Plaza, Dubai Marina, Dubai, UAE</li>
+            <li>+971 4 000 0000</li>
+            <li>hello@prime.example</li>
           </ul>
         </div>
-        <form class="contact-form" id="contact-form" novalidate>
+        <form class="contact-form" id="contact-form" novalidate data-reveal data-reveal-delay="1">
           <div class="field">
             <label for="cf-name">Name</label>
             <input id="cf-name" name="name" type="text" required />
@@ -139,8 +148,8 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <span>◆ DubaiEstates</span>
-      <p class="muted">© <span id="year"></span> Dubai Estates. Demo project — listings are illustrative.</p>
+      <span class="brand">Prime</span>
+      <p class="muted">© <span id="year"></span> Prime. Demo project — listings are illustrative.</p>
     </div>
   </footer>
 

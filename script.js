@@ -33,21 +33,24 @@
     return byType && byQuery;
   }
 
-  function cardTemplate(item) {
+  function cardTemplate(item, i) {
+    const featured = i === 0;
     return `
-      <article class="card" data-id="${item.id}" tabindex="0" role="button" aria-label="View ${item.title}">
+      <article class="card${featured ? " card--featured" : ""}" data-id="${item.id}" tabindex="0" role="button" aria-label="View ${item.title}" data-reveal data-reveal-delay="${i % 3}">
         <div class="card-media">
           <span class="badge">${item.status}</span>
           <img src="${item.img}" alt="${item.title}" loading="lazy" />
+          <span class="card-view">View property</span>
         </div>
         <div class="card-body">
-          <div class="card-price">${priceLabel(item)}</div>
-          <h3 class="card-title">${item.title}</h3>
+          ${featured ? '<p class="card-feature">Featured residence</p>' : ""}
           <p class="card-area">${item.area}</p>
+          <h3 class="card-title">${item.title}</h3>
+          <div class="card-price">${priceLabel(item)}</div>
           <div class="card-specs">
-            <span>🛏 ${bedsLabel(item.beds)}</span>
-            <span>🛁 ${item.baths}</span>
-            <span>📐 ${aed(item.size)} sqft</span>
+            <span>${bedsLabel(item.beds)}</span>
+            <span>${item.baths} bath${item.baths > 1 ? "s" : ""}</span>
+            <span>${aed(item.size)} sqft</span>
           </div>
         </div>
       </article>`;
@@ -57,6 +60,7 @@
     const visible = LISTINGS.filter(matches);
     grid.innerHTML = visible.map(cardTemplate).join("");
     emptyState.hidden = visible.length !== 0;
+    observeReveals();
   }
 
   // Filter chips
@@ -100,9 +104,9 @@
     modalBody.innerHTML = `
       <div class="modal-media"><img src="${item.img}" alt="${item.title}" /></div>
       <div class="modal-content">
-        <span class="badge" style="position:static;display:inline-block;margin-bottom:10px;">${item.status}</span>
+        <span class="badge">${item.status}</span>
+        <p class="modal-area">${item.area}, Dubai</p>
         <h3>${item.title}</h3>
-        <p class="muted">${item.area}, Dubai</p>
         <div class="modal-price">${priceLabel(item)}</div>
         <div class="modal-specs">
           <div><strong>${bedsLabel(item.beds)}</strong><span>Bedrooms</span></div>
@@ -175,5 +179,36 @@
   // Year
   document.getElementById("year").textContent = new Date().getFullYear();
 
+  // Sticky header: solid after scrolling past the hero fold
+  const header = document.querySelector(".site-header");
+  const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 80);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  // Scroll reveal — fade/slide elements in as they enter the viewport
+  let revealObserver = null;
+  if ("IntersectionObserver" in window) {
+    revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+    );
+  }
+  function observeReveals() {
+    const els = document.querySelectorAll("[data-reveal]:not(.in)");
+    if (!revealObserver) {
+      els.forEach((el) => el.classList.add("in"));
+      return;
+    }
+    els.forEach((el) => revealObserver.observe(el));
+  }
+
   render();
+  observeReveals();
 })();
