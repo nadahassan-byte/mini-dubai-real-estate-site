@@ -29,6 +29,12 @@
     return true;
   }
 
+  const ICON = {
+    bed: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5M3 18v2M21 18v2M3 13V7M7 11V9a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v2"/></svg>',
+    bath: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-3ZM6 12V6a2 2 0 0 1 2-2 2 2 0 0 1 2 2M7 19l-1 2M18 19l1 2"/></svg>',
+    area: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM4 9h4V4M20 15h-4v5"/></svg>',
+  };
+
   function card(it) {
     return `
       <article class="card" data-id="${it.id}" tabindex="0" role="button" aria-label="View ${it.title}" data-reveal>
@@ -39,15 +45,17 @@
           <span class="card-view">View property</span>
         </div>
         <div class="card-body">
-          <p class="card-area">${it.area}</p>
-          <h3 class="card-title">${it.title}</h3>
           <div class="card-price">${P.priceLabel(it)}</div>
+          <p class="card-sub">${it.type} in ${it.area}</p>
           <div class="card-specs">
-            <span>${P.bedsLabel(it.beds)}</span>
-            <span>${it.baths} bath${it.baths > 1 ? "s" : ""}</span>
-            <span>${P.aed(it.size)} sqft</span>
+            <span>${ICON.bed} ${P.bedsLabel(it.beds)}</span>
+            <span>${ICON.bath} ${it.baths} bath${it.baths > 1 ? "s" : ""}</span>
+            <span>${ICON.area} ${P.aed(it.size)} sqft</span>
           </div>
-          <div class="card-foot">${P.cmpToggleHTML(it.id)}</div>
+          <div class="card-foot">
+            <span class="card-ref">Ref. PRM-${String(it.id).padStart(4, "0")}</span>
+            ${P.cmpToggleHTML(it.id)}
+          </div>
         </div>
       </article>`;
   }
