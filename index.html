@@ -32,10 +32,7 @@
       <p class="eyebrow" data-reveal>The source for Dubai luxury real estate</p>
       <h1 data-reveal data-reveal-delay="1">A collection of the city's<br />most exceptional homes</h1>
       <p class="hero-sub" data-reveal data-reveal-delay="2">Curated apartments, villas and penthouses across Downtown, Marina, Palm Jumeirah and beyond — represented with discretion and care.</p>
-      <form class="hero-search" id="search-form" data-reveal data-reveal-delay="3">
-        <input type="text" id="search-input" placeholder="Search by area, e.g. Dubai Marina…" aria-label="Search listings" />
-        <button type="submit">Search</button>
-      </form>
+      <a href="#listings" class="btn hero-cta" data-reveal data-reveal-delay="3">View the collection</a>
       <div class="hero-stats" data-reveal data-reveal-delay="3">
         <div><strong>450+</strong><span>Active listings</span></div>
         <div><strong>18</strong><span>Neighbourhoods</span></div>
@@ -60,6 +57,10 @@
               <button class="chip" data-filter="Penthouse">Penthouses</button>
             </div>
           </div>
+          <form class="listing-search" id="search-form">
+            <input type="text" id="search-input" placeholder="Search by area, title or type, e.g. Dubai Marina…" aria-label="Search listings" />
+            <button type="submit">Search</button>
+          </form>
         </div>
         <div class="grid" id="listings-grid"><!-- cards injected by script.js --></div>
         <p class="empty" id="empty-state" hidden>No properties match your search.</p>

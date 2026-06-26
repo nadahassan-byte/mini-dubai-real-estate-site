@@ -119,6 +119,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: 0.01em
   font-size: 0.72rem; font-weight: 500; transition: background 0.3s var(--ease);
 }
 .hero-search button:hover { background: var(--gold-soft); }
+.hero-cta { margin-top: 8px; }
 .hero-stats { display: flex; gap: 60px; margin-top: 56px; flex-wrap: wrap; }
 .hero-stats strong {
   display: block; font-family: var(--serif); font-size: 2.6rem; font-weight: 500;
@@ -151,6 +152,24 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: 0.01em
 .section-head--center { text-align: center; }
 .section-head--center .divider { margin-bottom: 22px; }
 .section-head--center .eyebrow { margin-bottom: 12px; }
+
+/* ---- Listings search (in the properties section) ---- */
+.listing-search {
+  display: flex; max-width: 560px; margin-top: 32px; border: 1px solid var(--line);
+  background: #fff;
+}
+.listing-search input {
+  flex: 1; padding: 16px 20px; border: 0; background: transparent; font: inherit;
+  font-weight: 300; color: var(--ink); letter-spacing: 0.02em;
+}
+.listing-search input::placeholder { color: var(--muted); }
+.listing-search input:focus { outline: none; }
+.listing-search button {
+  border: 0; padding: 0 32px; cursor: pointer; background: var(--gold); color: var(--noir);
+  font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.2em;
+  font-size: 0.72rem; font-weight: 500; transition: background 0.3s var(--ease);
+}
+.listing-search button:hover { background: var(--gold-soft); }
 
 /* ---- Filters ---- */
 .filters { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -403,6 +422,8 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: 0.01em
   .hoods { grid-template-columns: 1fr; }
   .hero-search { flex-direction: column; }
   .hero-search button { padding: 16px; }
+  .listing-search { flex-direction: column; }
+  .listing-search button { padding: 14px; }
   .hero-stats { gap: 32px; }
   .modal-content { padding: 32px 28px 40px; }
   .modal-specs { gap: 28px; }

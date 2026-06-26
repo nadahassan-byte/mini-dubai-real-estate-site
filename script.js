@@ -78,7 +78,6 @@
     e.preventDefault();
     activeQuery = searchInput.value;
     render();
-    document.getElementById("listings").scrollIntoView({ behavior: "smooth" });
   });
   searchInput.addEventListener("input", () => {
     activeQuery = searchInput.value;
