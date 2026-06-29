@@ -121,15 +121,31 @@
 
   // ----- enquiry -----
   const form = document.getElementById("prop-form");
+  const ref = "PRM-" + String(item.id).padStart(4, "0");
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const name = document.getElementById("pf-name").value.trim();
     const email = document.getElementById("pf-email").value.trim();
     const note = document.getElementById("pf-note");
     if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { note.textContent = "Please enter your name and a valid email."; note.className = "form-note err"; return; }
-    note.textContent = `Thank you ${name.split(" ")[0]} — an advisor will contact you about PRM-${String(item.id).padStart(4, "0")} shortly.`;
-    note.className = "form-note ok";
-    form.reset();
+    const btn = form.querySelector("button[type=submit]");
+    if (btn) btn.disabled = true;
+    note.textContent = "Sending…"; note.className = "form-note";
+    P.submitEnquiry({
+      name: name,
+      email: email,
+      phone: document.getElementById("pf-phone").value.trim(),
+      interest: item.status === "For Rent" ? "Renting" : "Buying",
+      message: document.getElementById("pf-msg").value.trim(),
+      property_ref: ref,
+    }).then(() => {
+      note.textContent = `Thank you ${name.split(" ")[0]} — an advisor will contact you about ${ref} shortly.`;
+      note.className = "form-note ok";
+      form.reset();
+    }).catch(() => {
+      note.textContent = "Sorry, something went wrong. Please call us on +971 4 000 0000.";
+      note.className = "form-note err";
+    }).then(() => { if (btn) btn.disabled = false; });
   });
 
   // ----- recently viewed -----

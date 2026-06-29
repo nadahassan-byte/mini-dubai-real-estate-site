@@ -72,6 +72,27 @@ const LISTINGS = [
     blurb: "Smart studio with canal glimpses, gym and pool, moments from Bay Avenue. Annual rent, 4 cheques." }
 ];
 
+// Approx. map centroids per community (lat, lng). A small, deterministic
+// per-listing offset spreads pins so co-located homes don't overlap exactly.
+const AREA_COORDS = {
+  "Downtown Dubai": [25.1972, 55.2744],
+  "Dubai Marina": [25.0805, 55.1403],
+  "Palm Jumeirah": [25.1124, 55.1390],
+  "Jumeirah Village Circle": [25.0590, 55.2090],
+  "Business Bay": [25.1850, 55.2650],
+  "Arabian Ranches": [25.0500, 55.2700],
+  "Emirates Hills": [25.0680, 55.1620],
+  "Dubai Hills Estate": [25.1000, 55.2480],
+  "DIFC": [25.2110, 55.2790],
+  "Jumeirah Beach Residence": [25.0760, 55.1340],
+};
+LISTINGS.forEach((it) => {
+  const c = AREA_COORDS[it.area] || [25.1100, 55.2200];
+  const j = (n) => (((it.id * n) % 9) - 4) * 0.0016; // stable jitter
+  it.lat = c[0] + j(7);
+  it.lng = c[1] + j(13);
+});
+
 // gallery for a property's detail page: its own image + a few others from the pool
 function galleryFor(item) {
   const start = IMG_POOL.indexOf(item.img);

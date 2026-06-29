@@ -1,46 +1,79 @@
-# Mini Dubai Real Estate Site
+# PRIME — Dubai Real Estate
 
-A small, self-contained real-estate website for browsing Dubai properties. Built with plain
-**HTML, CSS and JavaScript** — no build step, no dependencies. Just open `index.html`.
+A self-contained luxury real-estate site for browsing Dubai properties. Built with plain
+**HTML, CSS and vanilla JavaScript** — no build step, no framework. Just open `index.html`.
 
 ## Features
 
-- **Hero with search** — filter listings live by area, title or type.
-- **Featured listings grid** — responsive cards with price (AED), beds, baths and size.
-- **Type filters** — All / Apartments / Villas / Penthouses.
-- **Property detail modal** — click any card for full details and an enquiry link.
-- **Neighbourhoods** — Downtown, Marina, Palm Jumeirah, Business Bay (click to filter).
-- **About + contact** — contact form with front-end validation (demo only).
-- Fully **responsive** down to mobile, with a collapsible nav.
+- **Immersive home page** — full-screen hero carousel, Featured Sales & Featured Rentals rows.
+- **Listings page** with:
+  - Filter by **location, type, status** and **keyword search** (title / community / type).
+  - **Sort** by featured, newest, price (↑/↓) or size.
+  - **Map view** — every matching listing as a pin (Leaflet + OpenStreetMap); popups link to the property.
+  - **Shareable filters** — the URL always reflects your filters; "Copy link" shares them.
+  - **Saved searches** — save a filter combo and re-apply it later (stored in your browser).
+  - **Load-more pagination**.
+- **Property detail pages** with gallery, amenities, mortgage estimate, enquiry form and breadcrumb.
+- **Multi-currency** — switch the header currency; all prices convert using **live exchange rates**
+  (with a bundled static fallback so it always works). Choice is remembered.
+- **Favourites** (saved drawer) and **compare up to 4** properties side by side.
+- **Calculators** — mortgage repayment **and** an affordability calculator
+  (income → borrowing power & budget, with a "homes you can afford" link).
+- **Recently viewed** properties.
+- **Real enquiries** — contact / enquiry / newsletter forms persist submissions (see below).
+- **Social previews** — Open Graph / Twitter card meta on every page (per-listing on detail pages).
+- Fully **responsive** with a collapsible nav.
 
 ## Files
 
 | File | Purpose |
 |------|---------|
-| `index.html` | Page structure and content |
+| `index.html`, `listings.html`, `property.html`, `legal.html` | Pages |
 | `styles.css` | All styling (no framework) |
-| `data.js` | Listing data — edit this to add/remove properties |
-| `script.js` | Rendering, search, filters, modal, contact form |
+| `config.js` | Site config — enquiry backend + FX endpoints (safe to commit) |
+| `data.js` | Listing data + map coordinates — edit to add/remove properties |
+| `app.js` | Shared engine: currency, favourites, compare, enquiries, saved searches, modal |
+| `home.js` | Home page: hero, featured rows, calculators, contact form |
+| `listings.js` | Listings: filters, sort, search, saved searches, map |
+| `property.js` | Property detail page |
+| `assets/props/` | Property photography (one unique image per listing) |
+| `assets/vendor/leaflet/` | Bundled Leaflet (so the map needs no CDN at runtime) |
+
+## Where enquiries go
+
+Out of the box, every form submission is stored in the visitor's browser (`localStorage`), so the
+forms are fully functional with **zero setup**. From any page's dev console you can run
+`PRIME.exportEnquiries()` to download them as JSON.
+
+To capture enquiries for real, edit **`config.js`** and fill in **one** option:
+
+- **Email via Web3Forms** (easiest, free, no backend): get an access key at
+  [web3forms.com](https://web3forms.com) and set `web3formsKey`. Enquiries arrive in your inbox.
+- **Supabase** (a real database): create a table `enquiries` with text columns
+  `name, email, phone, interest, message, property_ref, source`, add an RLS policy allowing
+  anonymous `INSERT`, then set `supabaseUrl` and `supabaseAnonKey`.
+
+If both are set, Supabase is used. A local copy is always kept too. (The anon/publishable key is
+designed to be public; row-level security protects the data.)
 
 ## Run locally
 
-Just open `index.html` in a browser, or serve the folder:
-
 ```bash
-python3 -m http.server 8000
-# then visit http://localhost:8000
+python3 -m http.server 8000   # then visit http://localhost:8000
 ```
 
-## Deploy (GitHub Pages)
+(Serve over http rather than opening the file directly so live exchange rates and map tiles load.)
 
-1. Push these files to the repository root.
-2. In the repo: **Settings → Pages → Source: Deploy from a branch**, pick `main` / root.
-3. Your site goes live at `https://<user>.github.io/mini-dubai-real-estate-site/`.
+## Deploy
+
+Static hosting (Vercel, Netlify, GitHub Pages). Push to the repo root and point the host at it.
 
 ## Customising
 
-- **Listings:** edit the `LISTINGS` array in `data.js`.
-- **Branding/colours:** edit the CSS variables at the top of `styles.css` (`--brand`, `--accent`, etc.).
-- **Images:** listing images use Unsplash URLs; swap the `img` values for your own photos.
+- **Listings:** edit the `LISTINGS` array in `data.js`. Map pins derive from `AREA_COORDS` + each
+  listing's `area`; add a community there to place it on the map.
+- **Currencies:** edit the `CURRENCIES` map in `app.js` (rates are units per 1 AED; live values
+  refine them at load).
+- **Branding/colours:** edit the CSS variables at the top of `styles.css`.
 
-> Note: listings and contact details are illustrative placeholders for a demo.
+> Listings and contact details are illustrative placeholders for a demo.

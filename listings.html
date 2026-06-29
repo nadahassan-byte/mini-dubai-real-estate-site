@@ -86,11 +86,24 @@
           <button type="button" class="link-muted" id="f-clear">Clear all</button>
         </form>
 
+        <div class="saved-searches" id="saved-searches" hidden>
+          <span class="ss-label">Saved searches</span>
+          <div class="ss-chips" id="ss-chips"></div>
+        </div>
+
         <div class="result-row" data-reveal>
           <p class="result-count" id="result-count">0 properties</p>
-          <button type="button" class="link-gold" id="copy-link">Copy link to these results</button>
+          <div class="result-actions">
+            <div class="view-toggle" role="tablist" aria-label="View as">
+              <button type="button" class="vt-btn is-active" data-view="list" role="tab" aria-selected="true">List</button>
+              <button type="button" class="vt-btn" data-view="map" role="tab" aria-selected="false">Map</button>
+            </div>
+            <button type="button" class="link-muted" id="save-search">★ Save search</button>
+            <button type="button" class="link-gold" id="copy-link">Copy link</button>
+          </div>
         </div>
         <div class="grid" id="listings-grid"><!-- cards injected --></div>
+        <div class="map-wrap" id="map-wrap" hidden><div id="map" role="application" aria-label="Map of properties"></div></div>
         <p class="empty" id="empty-state" hidden>No properties match your filters. <button class="link-gold" id="f-clear-2" onclick="document.getElementById('f-clear').click()">Clear filters</button></p>
         <div class="loadmore-wrap"><button class="loadmore" id="load-more" hidden>Load more properties</button></div>
       </div>
@@ -138,6 +151,7 @@
     </div>
   </footer>
 
+  <script src="config.js"></script>
   <script src="data.js"></script>
   <script src="app.js"></script>
   <script src="listings.js"></script>

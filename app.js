@@ -22,11 +22,61 @@
   const byId = (id) => LISTINGS.find((l) => l.id === Number(id));
 
   const aed = (n) => new Intl.NumberFormat("en-AE", { maximumFractionDigits: 0 }).format(n);
-  function priceLabel(it) {
-    const suffix = it.status === "For Rent" ? ' <small>/ yr</small>' : "";
-    return `AED ${aed(it.price)}${suffix}`;
-  }
   function bedsLabel(b) { return b === 0 ? "Studio" : `${b} bed${b > 1 ? "s" : ""}`; }
+
+  // ---------- currency ----------
+  // rate = units of the currency per 1 AED. Static fallbacks are refined by
+  // a live FX feed at load (see loadLiveRates) — the site works either way.
+  const CUR_KEY = "prime_currency";
+  const CURRENCIES = {
+    AED: { name: "UAE Dirham", rate: 1 },
+    USD: { name: "US Dollar", rate: 0.2723 },
+    EUR: { name: "Euro", rate: 0.2510 },
+    GBP: { name: "British Pound", rate: 0.2145 },
+    SAR: { name: "Saudi Riyal", rate: 1.0210 },
+    INR: { name: "Indian Rupee", rate: 22.71 },
+    CNY: { name: "Chinese Yuan", rate: 1.9620 },
+    RUB: { name: "Russian Ruble", rate: 21.50 },
+  };
+  let curCode = (function () { try { return localStorage.getItem(CUR_KEY) || "AED"; } catch (e) { return "AED"; } })();
+  if (!CURRENCIES[curCode]) curCode = "AED";
+
+  function convertFromAed(amount, code) { const c = CURRENCIES[code || curCode]; return amount * (c ? c.rate : 1); }
+  function moneyText(amount, code) {
+    code = code || curCode;
+    return `${code} ${new Intl.NumberFormat("en-AE", { maximumFractionDigits: 0 }).format(Math.round(convertFromAed(amount, code)))}`;
+  }
+  function priceLabel(it) {
+    const rent = it.status === "For Rent";
+    return `<span class="amt" data-aed="${it.price}">${moneyText(it.price)}</span>${rent ? ' <small>/ yr</small>' : ""}`;
+  }
+  function refreshPrices() {
+    document.querySelectorAll(".amt[data-aed]").forEach((el) => { el.textContent = moneyText(parseFloat(el.dataset.aed)); });
+  }
+  function setCurrency(code) {
+    if (!CURRENCIES[code]) return;
+    curCode = code;
+    try { localStorage.setItem(CUR_KEY, code); } catch (e) {}
+    document.querySelectorAll("[data-currency]").forEach((s) => { if (s.value !== code) s.value = code; });
+    refreshPrices();
+    document.dispatchEvent(new CustomEvent("prime:currency", { detail: { code: code } }));
+  }
+  function loadLiveRates() {
+    const eps = (window.PRIME_CONFIG && window.PRIME_CONFIG.fxEndpoints) || [];
+    (function tryEp(i) {
+      if (i >= eps.length || typeof fetch !== "function") return;
+      fetch(eps[i]).then((r) => (r.ok ? r.json() : Promise.reject())).then((data) => {
+        const aedRates = data && data.aed;
+        if (!aedRates) return Promise.reject();
+        Object.keys(CURRENCIES).forEach((code) => {
+          if (code === "AED") return;
+          const v = aedRates[code.toLowerCase()];
+          if (typeof v === "number" && v > 0) CURRENCIES[code].rate = v;
+        });
+        refreshPrices();
+      }).catch(() => tryEp(i + 1));
+    })(0);
+  }
 
   // ---------- storage ----------
   const FAV_KEY = "prime_favs", CMP_KEY = "prime_compare", CMP_MAX = 4;
@@ -218,7 +268,7 @@
       ["Bedrooms", (it) => bedsLabel(it.beds)],
       ["Bathrooms", (it) => String(it.baths)],
       ["Size", (it) => `${aed(it.size)} sqft`],
-      ["Price / sqft", (it) => `AED ${aed(Math.round(it.price / it.size))}`],
+      ["Price / sqft", (it) => `<span class="amt" data-aed="${Math.round(it.price / it.size)}">${moneyText(Math.round(it.price / it.size))}</span>`],
     ];
     const cols = `200px repeat(${items.length}, minmax(180px, 1fr))`;
     let html = `<h3 class="cmp-modal-title">Compare properties</h3>`;
@@ -260,6 +310,19 @@
       window.addEventListener("scroll", onScroll, { passive: true });
       onScroll();
     }
+    // currency selector — injected so every page gets it without HTML edits
+    const actions = document.querySelector(".header-actions");
+    if (actions && !actions.querySelector("[data-currency]")) {
+      const sel = document.createElement("select");
+      sel.className = "cur-select";
+      sel.setAttribute("data-currency", "");
+      sel.setAttribute("aria-label", "Display currency");
+      sel.innerHTML = Object.keys(CURRENCIES).map((c) => `<option value="${c}">${c}</option>`).join("");
+      sel.value = curCode;
+      sel.addEventListener("change", () => setCurrency(sel.value));
+      actions.insertBefore(sel, actions.firstChild);
+    }
+
     const navToggle = document.querySelector(".nav-toggle");
     const nav = document.querySelector(".nav");
     if (navToggle && nav) {
@@ -296,6 +359,7 @@
         const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
         if (!ok) { note.textContent = "Please enter a valid email address."; note.className = "news-note err"; return; }
         if (consent && !consent.checked) { note.textContent = "Please accept the Privacy Policy to continue."; note.className = "news-note err"; return; }
+        submitEnquiry({ email: email.value.trim(), interest: "Newsletter", message: "Newsletter signup" }).catch(() => {});
         note.textContent = "Thank you — you're on the list.";
         note.className = "news-note ok";
         form.reset();
@@ -351,12 +415,63 @@
     });
   }
 
+  // ---------- saved searches ----------
+  const SS_KEY = "prime_saved_searches";
+  function getSearches() { try { return JSON.parse(localStorage.getItem(SS_KEY)) || []; } catch (e) { return []; } }
+  function saveSearch(name, qs) {
+    const list = getSearches();
+    if (list.some((s) => s.qs === qs)) return list; // no duplicates
+    list.unshift({ id: Date.now(), name: name, qs: qs });
+    store(SS_KEY, list.slice(0, 24));
+    return getSearches();
+  }
+  function removeSearch(id) { store(SS_KEY, getSearches().filter((s) => String(s.id) !== String(id))); return getSearches(); }
+
+  // ---------- enquiries (configurable backend) ----------
+  const ENQ_KEY = "prime_enquiries";
+  function localEnquiries() { try { return JSON.parse(localStorage.getItem(ENQ_KEY)) || []; } catch (e) { return []; } }
+  function submitEnquiry(payload) {
+    const cfg = window.PRIME_CONFIG || {};
+    const rec = Object.assign(
+      { created_at: new Date().toISOString(), source: (location.pathname.split("/").pop() || "index.html") },
+      payload
+    );
+    try { const all = localEnquiries(); all.unshift(rec); localStorage.setItem(ENQ_KEY, JSON.stringify(all.slice(0, 200))); } catch (e) {}
+
+    if (cfg.supabaseUrl && cfg.supabaseAnonKey) {
+      return fetch(cfg.supabaseUrl.replace(/\/$/, "") + "/rest/v1/" + (cfg.enquiriesTable || "enquiries"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json", apikey: cfg.supabaseAnonKey, Authorization: "Bearer " + cfg.supabaseAnonKey, Prefer: "return=minimal" },
+        body: JSON.stringify(rec),
+      }).then((r) => { if (!r.ok) throw new Error("supabase " + r.status); return true; });
+    }
+    if (cfg.web3formsKey) {
+      return fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(Object.assign({ access_key: cfg.web3formsKey, subject: "New PRIME enquiry — " + (rec.source || "") }, rec)),
+      }).then((r) => { if (!r.ok) throw new Error("web3forms " + r.status); return true; });
+    }
+    return Promise.resolve(true); // local-only mode
+  }
+  function exportEnquiries() {
+    const blob = new Blob([JSON.stringify(localEnquiries(), null, 2)], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "prime-enquiries.json"; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    return localEnquiries().length + " enquiries exported";
+  }
+
   // ---------- expose + init ----------
   window.PRIME = {
     LISTINGS, byId, aed, priceLabel, bedsLabel,
     heartHTML, cmpToggleHTML, isFav, isCmp,
     observeReveals, openModal, recordView, getRecent,
     galleryFor: window.galleryFor,
+    moneyText, convertFromAed, setCurrency, refreshPrices,
+    currencies: () => CURRENCIES, currency: () => curCode,
+    getSearches, saveSearch, removeSearch,
+    submitEnquiry, exportEnquiries,
     locations: () => Array.from(new Set(LISTINGS.map((l) => l.area))).sort(),
     types: () => Array.from(new Set(LISTINGS.map((l) => l.type))).sort(),
   };
@@ -369,5 +484,6 @@
     syncFavs();
     syncCmp();
     observeReveals();
+    loadLiveRates();
   });
 })();

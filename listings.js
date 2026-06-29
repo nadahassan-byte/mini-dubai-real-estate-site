@@ -16,6 +16,8 @@
   const loadMore = document.getElementById("load-more");
   const PAGE = 9;
   let shown = PAGE;
+  let lastMatched = [];   // full filtered set (for the map)
+  let view = "list";
 
   P.types().forEach((t) => fType.add(new Option(t === "Apartment" ? "Apartments" : t + "s", t)));
   P.locations().forEach((l) => fLoc.add(new Option(l, l)));
@@ -27,15 +29,22 @@
   if (params.get("status")) fStatus.value = params.get("status");
   if (params.get("q")) fSearch.value = params.get("q");
   if (params.get("sort")) fSort.value = params.get("sort");
+  let minPrice = parseFloat(params.get("minprice")) || 0;
+  let maxPrice = parseFloat(params.get("maxprice")) || 0;
 
-  function syncURL() {
+  function buildQS() {
     const p = new URLSearchParams();
     if (fLoc.value !== "all") p.set("location", fLoc.value);
     if (fType.value !== "all") p.set("type", fType.value);
     if (fStatus.value !== "all") p.set("status", fStatus.value);
     if (fSearch.value.trim()) p.set("q", fSearch.value.trim());
     if (fSort.value !== "featured") p.set("sort", fSort.value);
-    const qs = p.toString();
+    if (minPrice > 0) p.set("minprice", String(minPrice));
+    if (maxPrice > 0) p.set("maxprice", String(maxPrice));
+    return p.toString();
+  }
+  function syncURL() {
+    const qs = buildQS();
     history.replaceState(null, "", qs ? "?" + qs : location.pathname);
   }
 
@@ -43,6 +52,8 @@
     if (fType.value !== "all" && it.type !== fType.value) return false;
     if (fLoc.value !== "all" && it.area !== fLoc.value) return false;
     if (fStatus.value !== "all" && it.status !== fStatus.value) return false;
+    if (minPrice > 0 && it.price < minPrice) return false;
+    if (maxPrice > 0 && it.price > maxPrice) return false;
     const q = fSearch.value.trim().toLowerCase();
     if (q && !(it.area.toLowerCase().includes(q) || it.title.toLowerCase().includes(q) || it.type.toLowerCase().includes(q))) return false;
     return true;
@@ -86,12 +97,14 @@
 
   function render() {
     const all = P.LISTINGS.filter(matches).sort(sortFn);
+    lastMatched = all;
     const vis = all.slice(0, shown);
     grid.innerHTML = vis.map(card).join("");
     empty.hidden = all.length !== 0;
     countEl.textContent = `${all.length} ${all.length === 1 ? "property" : "properties"}`;
-    loadMore.hidden = all.length <= shown;
+    loadMore.hidden = all.length <= shown || view === "map";
     P.observeReveals();
+    if (view === "map") updateMap();
   }
   function reset() { shown = PAGE; syncURL(); render(); }
 
@@ -100,10 +113,133 @@
   loadMore.addEventListener("click", () => { shown += PAGE; render(); });
   document.getElementById("f-clear").addEventListener("click", () => {
     fType.value = "all"; fLoc.value = "all"; fStatus.value = "all"; fSearch.value = ""; fSort.value = "featured";
+    minPrice = 0; maxPrice = 0;
     reset();
   });
   document.getElementById("copy-link").addEventListener("click", async (e) => {
-    try { await navigator.clipboard.writeText(location.href); const b = e.target; const o = b.textContent; b.textContent = "Link copied ✓"; setTimeout(() => { b.textContent = o; }, 1800); } catch (err) {}
+    try { await navigator.clipboard.writeText(location.href); const b = e.currentTarget; const o = b.textContent; b.textContent = "Link copied ✓"; setTimeout(() => { b.textContent = o; }, 1800); } catch (err) {}
+  });
+
+  // ---- re-render prices on currency change (covers map popups too) ----
+  document.addEventListener("prime:currency", () => { if (view === "map") updateMap(); });
+
+  // ---- saved searches ----
+  const ssWrap = document.getElementById("saved-searches");
+  const ssChips = document.getElementById("ss-chips");
+  function describe(qs) {
+    const p = new URLSearchParams(qs);
+    const bits = [];
+    if (p.get("type")) bits.push(p.get("type") + "s");
+    if (p.get("status")) bits.push(p.get("status"));
+    if (p.get("location")) bits.push("in " + p.get("location"));
+    if (p.get("q")) bits.push('“' + p.get("q") + '”');
+    if (p.get("maxprice")) bits.push("≤ " + P.moneyText(parseFloat(p.get("maxprice"))));
+    if (p.get("minprice")) bits.push("≥ " + P.moneyText(parseFloat(p.get("minprice"))));
+    return bits.join(" · ") || "All properties";
+  }
+  function renderSearches() {
+    const list = P.getSearches();
+    ssWrap.hidden = list.length === 0;
+    ssChips.innerHTML = list.map((s) =>
+      `<span class="ss-chip"><button class="ss-apply" data-qs="${encodeURIComponent(s.qs)}">${s.name}</button><button class="ss-del" data-del="${s.id}" aria-label="Delete saved search">✕</button></span>`
+    ).join("");
+  }
+  function applyQS(qs) {
+    const p = new URLSearchParams(qs);
+    fLoc.value = p.get("location") || "all";
+    fType.value = p.get("type") || "all";
+    fStatus.value = p.get("status") || "all";
+    fSearch.value = p.get("q") || "";
+    fSort.value = p.get("sort") || "featured";
+    minPrice = parseFloat(p.get("minprice")) || 0;
+    maxPrice = parseFloat(p.get("maxprice")) || 0;
+    reset();
+  }
+  document.getElementById("save-search").addEventListener("click", (e) => {
+    const qs = buildQS();
+    const name = describe(qs);
+    P.saveSearch(name, qs);
+    renderSearches();
+    const b = e.currentTarget, o = b.textContent; b.textContent = "★ Saved ✓"; setTimeout(() => { b.textContent = o; }, 1600);
+  });
+  ssChips.addEventListener("click", (e) => {
+    const apply = e.target.closest(".ss-apply");
+    if (apply) { applyQS(decodeURIComponent(apply.dataset.qs)); return; }
+    const del = e.target.closest(".ss-del");
+    if (del) { P.removeSearch(del.dataset.del); renderSearches(); }
+  });
+  renderSearches();
+
+  // ---- map view (Leaflet, lazy-loaded) ----
+  const mapWrap = document.getElementById("map-wrap");
+  let map = null, markers = null, leafletLoading = null;
+  function loadLeaflet() {
+    if (window.L) return Promise.resolve();
+    if (leafletLoading) return leafletLoading;
+    leafletLoading = new Promise((resolve, reject) => {
+      const css = document.createElement("link");
+      css.rel = "stylesheet"; css.href = "assets/vendor/leaflet/leaflet.css";
+      document.head.appendChild(css);
+      const js = document.createElement("script");
+      js.src = "assets/vendor/leaflet/leaflet.js";
+      js.onload = resolve; js.onerror = reject;
+      document.head.appendChild(js);
+    });
+    return leafletLoading;
+  }
+  function markerIcon() {
+    const base = "assets/vendor/leaflet/images/";
+    return window.L.icon({
+      iconUrl: base + "marker-icon.png", iconRetinaUrl: base + "marker-icon-2x.png",
+      shadowUrl: base + "marker-shadow.png",
+      iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41],
+    });
+  }
+  function popupHTML(it) {
+    return `<div class="map-pop" data-id="${it.id}">
+      <div class="map-pop-img" style="background-image:url('${it.img}')"></div>
+      <div class="map-pop-body">
+        <p class="map-pop-price">${P.priceLabel(it)}</p>
+        <p class="map-pop-title">${it.title}</p>
+        <p class="map-pop-sub">${it.area} · ${P.bedsLabel(it.beds)}</p>
+        <a class="map-pop-link" href="property.html?id=${it.id}">View property →</a>
+      </div></div>`;
+  }
+  function updateMap() {
+    if (!map) return;
+    if (markers) markers.clearLayers(); else markers = window.L.layerGroup().addTo(map);
+    const pts = [];
+    lastMatched.forEach((it) => {
+      if (typeof it.lat !== "number") return;
+      const m = window.L.marker([it.lat, it.lng], { icon: markerIcon() }).bindPopup(popupHTML(it), { minWidth: 220 });
+      markers.addLayer(m); pts.push([it.lat, it.lng]);
+    });
+    if (pts.length) map.fitBounds(pts, { padding: [40, 40], maxZoom: 13 });
+  }
+  function showMap() {
+    loadLeaflet().then(() => {
+      if (!map) {
+        map = window.L.map("map", { scrollWheelZoom: false }).setView([25.11, 55.22], 11);
+        window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          maxZoom: 19, attribution: "© OpenStreetMap contributors",
+        }).addTo(map);
+      }
+      setTimeout(() => { map.invalidateSize(); updateMap(); }, 60);
+    }).catch(() => { mapWrap.innerHTML = '<p class="map-fail">Map could not be loaded. Please check your connection.</p>'; });
+  }
+  function setView(v) {
+    view = v;
+    document.querySelectorAll(".vt-btn").forEach((b) => {
+      const on = b.dataset.view === v;
+      b.classList.toggle("is-active", on); b.setAttribute("aria-selected", String(on));
+    });
+    grid.hidden = v === "map";
+    mapWrap.hidden = v !== "map";
+    loadMore.hidden = v === "map" || lastMatched.length <= shown;
+    if (v === "map") showMap();
+  }
+  document.querySelector(".view-toggle").addEventListener("click", (e) => {
+    const b = e.target.closest(".vt-btn"); if (b) setView(b.dataset.view);
   });
 
   render();

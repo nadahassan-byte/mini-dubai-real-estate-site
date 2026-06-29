@@ -119,8 +119,12 @@
       <div class="container">
         <div class="section-head" data-reveal>
           <p class="eyebrow">Plan your purchase</p>
-          <div class="row"><h2>Mortgage calculator</h2></div>
-          <p class="muted">Estimate your monthly payment. Adjust the figures to match your plans.</p>
+          <div class="row"><h2>Calculators</h2></div>
+          <p class="muted">Estimate a monthly payment, or work out what you can afford. Adjust the figures to match your plans.</p>
+          <div class="calc-tabs" role="tablist" aria-label="Calculator">
+            <button class="calc-tab is-active" data-calc="mc" role="tab" aria-selected="true">Mortgage</button>
+            <button class="calc-tab" data-calc="ac" role="tab" aria-selected="false">Affordability</button>
+          </div>
         </div>
         <div class="mc" id="mc" data-reveal>
           <div class="mc-form">
@@ -154,6 +158,40 @@
             <p class="mc-result-big is-gold" id="mc-monthly">0 AED</p>
             <p class="mc-note">Indicative only, based on the figures you enter. Speak to an advisor for tailored mortgage options.</p>
             <a href="#contact" class="btn">Speak to an advisor</a>
+          </div>
+        </div>
+
+        <div class="mc" id="ac" data-reveal hidden>
+          <div class="mc-form">
+            <span class="mc-grouplabel">Your finances</span>
+            <div class="mc-field">
+              <label for="ac-income">Gross monthly income</label>
+              <div class="mc-input"><input id="ac-income" inputmode="numeric" value="50,000" /><span>AED</span></div>
+            </div>
+            <div class="mc-field">
+              <label for="ac-debts">Existing monthly commitments</label>
+              <div class="mc-input"><input id="ac-debts" inputmode="numeric" value="3,000" /><span>AED</span></div>
+            </div>
+            <div class="mc-field">
+              <label for="ac-down">Cash for down payment</label>
+              <div class="mc-input"><input id="ac-down" inputmode="numeric" value="600,000" /><span>AED</span></div>
+            </div>
+            <div class="mc-field">
+              <label for="ac-rate">Interest rate</label>
+              <div class="mc-input"><input id="ac-rate" inputmode="decimal" value="4.25" /><span>%</span></div>
+            </div>
+            <div class="mc-field">
+              <label for="ac-term">Loan duration <em id="ac-term-val">25 Years</em></label>
+              <input id="ac-term" class="mc-range" type="range" min="5" max="30" step="1" value="25" />
+            </div>
+          </div>
+          <div class="mc-result">
+            <p class="mc-result-label">You could borrow up to</p>
+            <p class="mc-result-big" id="ac-loan">0 AED</p>
+            <p class="mc-result-label">Comfortable property budget</p>
+            <p class="mc-result-big is-gold" id="ac-budget">0 AED</p>
+            <p class="mc-note" id="ac-note">Based on a 50% debt-burden ratio (the UAE standard) plus your down payment. Indicative only.</p>
+            <a href="listings.html?status=For%20Sale" class="btn" id="ac-cta">See homes you can afford</a>
           </div>
         </div>
       </div>
@@ -262,6 +300,7 @@
     </div>
   </footer>
 
+  <script src="config.js"></script>
   <script src="data.js"></script>
   <script src="app.js"></script>
   <script src="home.js"></script>

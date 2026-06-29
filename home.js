@@ -142,6 +142,67 @@
     compute();
   }
 
+  // ---------- Calculator tabs (Mortgage / Affordability) ----------
+  const calcTabs = document.querySelectorAll(".calc-tab");
+  if (calcTabs.length) {
+    calcTabs.forEach((t) => t.addEventListener("click", () => {
+      const target = t.dataset.calc;
+      calcTabs.forEach((x) => { const on = x === t; x.classList.toggle("is-active", on); x.setAttribute("aria-selected", String(on)); });
+      const mcEl = document.getElementById("mc"), acEl = document.getElementById("ac");
+      if (mcEl) mcEl.hidden = target !== "mc";
+      if (acEl) acEl.hidden = target !== "ac";
+    }));
+  }
+
+  // ---------- Affordability calculator ----------
+  const ac = document.getElementById("ac");
+  if (ac) {
+    const fmt = (n) => new Intl.NumberFormat("en-AE", { maximumFractionDigits: 0 }).format(Math.round(n));
+    const num = (el) => parseFloat(String(el.value).replace(/[^0-9.]/g, "")) || 0;
+    const els = {
+      income: document.getElementById("ac-income"),
+      debts: document.getElementById("ac-debts"),
+      down: document.getElementById("ac-down"),
+      rate: document.getElementById("ac-rate"),
+      term: document.getElementById("ac-term"),
+      termVal: document.getElementById("ac-term-val"),
+      loan: document.getElementById("ac-loan"),
+      budget: document.getElementById("ac-budget"),
+      note: document.getElementById("ac-note"),
+      cta: document.getElementById("ac-cta"),
+    };
+    const DBR = 0.50;     // UAE debt-burden ratio cap
+    const MAX_LTV = 0.80; // residents: up to 80% loan-to-value
+
+    function compute() {
+      const income = num(els.income), debts = num(els.debts), down = num(els.down);
+      const r = num(els.rate) / 100 / 12, n = num(els.term) * 12;
+      if (els.termVal) els.termVal.textContent = num(els.term) + " Years";
+      const maxMonthly = Math.max(0, income * DBR - debts);
+      let loanByIncome = 0;
+      if (n > 0) loanByIncome = r === 0 ? maxMonthly * n : maxMonthly * (1 - Math.pow(1 + r, -n)) / r;
+      // cap so the loan never exceeds 80% LTV given the down payment
+      const priceByLTV = down > 0 ? down / (1 - MAX_LTV) : Infinity;
+      let budget = Math.min(loanByIncome + down, priceByLTV);
+      budget = Math.floor(budget / 50000) * 50000; // round to a tidy figure
+      const loan = Math.max(0, budget - down);
+      els.loan.textContent = fmt(loan) + " AED";
+      els.budget.textContent = fmt(budget) + " AED";
+      els.cta.href = budget > 0 ? `listings.html?status=For%20Sale&maxprice=${budget}` : "listings.html?status=For%20Sale";
+      els.note.textContent = budget > 0 && Math.abs(budget - priceByLTV) < 1
+        ? "Limited by your down payment (min. 20% for residents). A larger deposit raises your budget."
+        : "Based on a 50% debt-burden ratio (the UAE standard) plus your down payment. Indicative only.";
+    }
+    [els.income, els.debts, els.down].forEach((el) => {
+      el.addEventListener("input", compute);
+      el.addEventListener("blur", () => { el.value = fmt(num(el)); compute(); });
+    });
+    els.rate.addEventListener("input", compute);
+    els.term.addEventListener("input", compute);
+    [els.income, els.debts, els.down].forEach((el) => { el.value = fmt(num(el)); });
+    compute();
+  }
+
   // ---------- Contact form ----------
   const contactForm = document.getElementById("contact-form");
   if (contactForm) {
@@ -156,9 +217,22 @@
         note.className = "form-note err";
         return;
       }
-      note.textContent = `Thanks ${name.split(" ")[0]} — an advisor will be in touch shortly.`;
-      note.className = "form-note ok";
-      contactForm.reset();
+      const btn = contactForm.querySelector("button[type=submit]");
+      if (btn) btn.disabled = true;
+      note.textContent = "Sending…"; note.className = "form-note";
+      P.submitEnquiry({
+        name: name,
+        email: email,
+        interest: document.getElementById("cf-interest").value,
+        message: document.getElementById("cf-message").value.trim(),
+      }).then(() => {
+        note.textContent = `Thanks ${name.split(" ")[0]} — an advisor will be in touch shortly.`;
+        note.className = "form-note ok";
+        contactForm.reset();
+      }).catch(() => {
+        note.textContent = "Sorry, something went wrong. Please call us on +971 4 000 0000.";
+        note.className = "form-note err";
+      }).then(() => { if (btn) btn.disabled = false; });
     });
   }
 })();
