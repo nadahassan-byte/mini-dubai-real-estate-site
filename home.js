@@ -42,31 +42,46 @@
     play();
   }
 
-  // ---------- Featured carousel ----------
-  const track = document.getElementById("ex-track");
-  if (track) {
-    const featured = P.LISTINGS.filter((l) => l.featured).slice(0, 8);
-    track.innerHTML = featured.map(exCard).join("");
-    P.observeReveals();
-    const prev = document.querySelector("[data-ex-prev]");
-    const next = document.querySelector("[data-ex-next]");
-    const step = () => Math.min(track.clientWidth * 0.85, 760);
-    if (prev) prev.addEventListener("click", () => track.scrollBy({ left: -step(), behavior: "smooth" }));
-    if (next) next.addEventListener("click", () => track.scrollBy({ left: step(), behavior: "smooth" }));
-  }
-  function exCard(it) {
+  // ---------- Featured sales & rentals (Domus Nova style) ----------
+  function dnCard(it) {
+    const meta = `${P.bedsLabel(it.beds)} · ${it.type}`;
     return `
-      <article class="ex-card" data-id="${it.id}" tabindex="0" role="button" aria-label="View ${it.title}">
-        <div class="ex-media">
-          <img src="${it.img}" alt="${it.title}" loading="lazy" />
+      <article class="dn-card" data-id="${it.id}" tabindex="0" role="button" aria-label="View ${it.title}">
+        <div class="dn-media">
+          ${it.tag ? `<span class="dn-tag">${it.tag}</span>` : ""}
           ${P.heartHTML(it.id)}
-          <div class="ex-overlay">
-            <p class="ex-loc">${it.area}</p>
-            <p class="ex-price">${P.priceLabel(it)}</p>
-          </div>
+          <img src="${it.img}" alt="${it.title}" loading="lazy" />
+        </div>
+        <div class="dn-body">
+          <div class="dn-line"><span class="dn-title">${it.title}</span><span class="dn-price">${P.priceLabel(it)}</span></div>
+          <div class="dn-line dn-sub"><span>${it.area}</span><span>${meta}</span></div>
         </div>
       </article>`;
   }
+  function setupRow(kind, status) {
+    const grid = document.getElementById("grid-" + kind);
+    const tabsEl = document.querySelector('[data-tabs="' + kind + '"]');
+    if (!grid || !tabsEl) return;
+    const items = P.LISTINGS.filter((l) => l.status === status);
+    const areas = Array.from(new Set(items.map((i) => i.area))).slice(0, 4);
+    const tabs = ["All"].concat(areas);
+    let active = "All";
+    tabsEl.innerHTML = tabs.map((t) => `<button class="dn-tab${t === "All" ? " is-active" : ""}" data-area="${t}" role="tab">${t}</button>`).join("");
+    function render() {
+      const vis = items.filter((i) => active === "All" || i.area === active).slice(0, 8);
+      grid.innerHTML = vis.map(dnCard).join("");
+      P.observeReveals();
+    }
+    tabsEl.addEventListener("click", (e) => {
+      const b = e.target.closest(".dn-tab"); if (!b) return;
+      active = b.dataset.area;
+      tabsEl.querySelectorAll(".dn-tab").forEach((x) => x.classList.toggle("is-active", x === b));
+      render();
+    });
+    render();
+  }
+  setupRow("sales", "For Sale");
+  setupRow("rentals", "For Rent");
 
   // ---------- Mortgage calculator ----------
   const mc = document.getElementById("mc");

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Property — PRIME by betterhomes</title>
+  <meta name="description" id="meta-desc" content="A PRIME by betterhomes residence in Dubai." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="PRIME by betterhomes" />
+  <meta property="og:title" id="og-title" content="Property — PRIME by betterhomes" />
+  <meta property="og:description" id="og-desc" content="A PRIME by betterhomes residence in Dubai." />
+  <meta property="og:image" id="og-image" content="assets/prime-logo-dark.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="page-listings page-property">
+  <header class="site-header scrolled" id="top">
+    <div class="container header-inner">
+      <a href="index.html#top" class="brand" aria-label="PRIME by betterhomes — home"><img src="assets/prime-logo-light.png" alt="PRIME by betterhomes" class="brand-logo" /></a>
+      <nav class="nav" aria-label="Primary">
+        <a href="listings.html">Properties</a>
+        <a href="index.html#neighbourhoods">Neighbourhoods</a>
+        <a href="index.html#calculator">Mortgage</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact" class="nav-cta">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <button class="nav-saved" data-saved-open aria-label="View saved properties"><span class="nav-saved-heart" aria-hidden="true">♥</span><span class="saved-count" data-fav-count>0</span></button>
+        <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="property-main">
+    <div class="container">
+      <nav class="crumbs" id="crumbs" aria-label="Breadcrumb"></nav>
+    </div>
+    <div id="property"><!-- injected by property.js --></div>
+
+    <section class="section" id="recent-section" hidden>
+      <div class="container">
+        <div class="section-head"><p class="eyebrow">Keep exploring</p><div class="row"><h2>Recently viewed</h2></div></div>
+        <div class="grid" id="recent-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-news">
+        <p class="footer-lead">Sign up for new listings, market insight and private viewings.</p>
+        <form class="news-form" id="news-form" novalidate>
+          <input type="email" id="news-email" placeholder="Your email address" aria-label="Email address" />
+          <button type="submit" aria-label="Subscribe">&rarr;</button>
+        </form>
+        <label class="news-consent"><input type="checkbox" id="news-consent" /> I have read and agreed to the <a href="legal.html#privacy">Privacy Policy</a>.</label>
+        <p class="news-note" id="news-note" role="status"></p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Follow us in Dubai</p>
+        <div class="socials" data-socials></div>
+        <p class="footer-head footer-head--mt">Information</p>
+        <ul class="footer-links">
+          <li><a href="index.html#about">About PRIME</a></li>
+          <li><a href="listings.html">Properties</a></li>
+          <li><a href="index.html#calculator">Mortgage calculator</a></li>
+          <li><a href="index.html#contact">Contact us</a></li>
+          <li><a href="tel:+97140000000">Tel: +971 4 000 0000</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Follow us in Abu Dhabi</p>
+        <div class="socials" data-socials></div>
+        <p class="footer-head footer-head--mt">Legal</p>
+        <ul class="footer-links">
+          <li><a href="legal.html#terms">Terms &amp; conditions</a></li>
+          <li><a href="legal.html#privacy">Privacy policy &amp; cookies</a></li>
+          <li><a href="legal.html#landlord-fees">Landlord letting fees</a></li>
+          <li><a href="legal.html#tenant-fees">Tenant letting fees</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-base">
+      <img src="assets/prime-logo-light.png" alt="PRIME by betterhomes" class="footer-logo" />
+      <p class="muted">© <span id="year"></span> PRIME by betterhomes. Demo project — listings are illustrative.</p>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script src="property.js"></script>
+</body>
+</html>

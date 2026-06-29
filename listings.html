@@ -5,7 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Properties — PRIME by betterhomes</title>
   <meta name="description" content="Browse PRIME's Dubai property collection. Filter by location and property type, save favourites and compare homes side by side." />
-  <link rel="preconnect" href="https://images.unsplash.com" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="PRIME by betterhomes" />
+  <meta property="og:title" content="Dubai Properties — PRIME by betterhomes" />
+  <meta property="og:description" content="Filter by location and property type, save favourites and compare homes side by side." />
+  <meta property="og:image" content="assets/props/1fkPuSuiUkcs4055pRbqy9txkMuHfUDdr.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -64,6 +69,16 @@
               <option value="For Rent">For rent</option>
             </select>
           </div>
+          <div class="filter">
+            <label for="f-sort">Sort by</label>
+            <select id="f-sort">
+              <option value="featured">Featured</option>
+              <option value="newest">Newest first</option>
+              <option value="price-asc">Price · low to high</option>
+              <option value="price-desc">Price · high to low</option>
+              <option value="size-desc">Size · largest</option>
+            </select>
+          </div>
           <div class="filter filter-grow">
             <label for="f-search">Search</label>
             <input id="f-search" type="text" placeholder="Area, title or type…" />
@@ -71,9 +86,13 @@
           <button type="button" class="link-muted" id="f-clear">Clear all</button>
         </form>
 
-        <p class="result-count" id="result-count" data-reveal>0 properties</p>
+        <div class="result-row" data-reveal>
+          <p class="result-count" id="result-count">0 properties</p>
+          <button type="button" class="link-gold" id="copy-link">Copy link to these results</button>
+        </div>
         <div class="grid" id="listings-grid"><!-- cards injected --></div>
         <p class="empty" id="empty-state" hidden>No properties match your filters. <button class="link-gold" id="f-clear-2" onclick="document.getElementById('f-clear').click()">Clear filters</button></p>
+        <div class="loadmore-wrap"><button class="loadmore" id="load-more" hidden>Load more properties</button></div>
       </div>
     </section>
   </main>
@@ -86,7 +105,7 @@
           <input type="email" id="news-email" placeholder="Your email address" aria-label="Email address" />
           <button type="submit" aria-label="Subscribe">&rarr;</button>
         </form>
-        <label class="news-consent"><input type="checkbox" id="news-consent" /> I have read and agreed to the <a href="#">Privacy Policy</a>.</label>
+        <label class="news-consent"><input type="checkbox" id="news-consent" /> I have read and agreed to the <a href="legal.html#privacy">Privacy Policy</a>.</label>
         <p class="news-note" id="news-note" role="status"></p>
       </div>
       <div class="footer-col">
@@ -106,10 +125,10 @@
         <div class="socials" data-socials></div>
         <p class="footer-head footer-head--mt">Legal</p>
         <ul class="footer-links">
-          <li><a href="#">Terms &amp; conditions</a></li>
-          <li><a href="#">Privacy policy &amp; cookies</a></li>
-          <li><a href="#">Landlord letting fees</a></li>
-          <li><a href="#">Tenant letting fees</a></li>
+          <li><a href="legal.html#terms">Terms &amp; conditions</a></li>
+          <li><a href="legal.html#privacy">Privacy policy &amp; cookies</a></li>
+          <li><a href="legal.html#landlord-fees">Landlord letting fees</a></li>
+          <li><a href="legal.html#tenant-fees">Tenant letting fees</a></li>
         </ul>
       </div>
     </div>

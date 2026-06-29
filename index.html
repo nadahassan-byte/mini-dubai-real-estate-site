@@ -5,7 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PRIME — Luxury Property in Dubai</title>
   <meta name="description" content="PRIME by betterhomes — the source for Dubai luxury real estate. Curated apartments, villas and penthouses across the city's most prestigious neighbourhoods." />
-  <link rel="preconnect" href="https://images.unsplash.com" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="PRIME by betterhomes" />
+  <meta property="og:title" content="PRIME by betterhomes — Luxury Property in Dubai" />
+  <meta property="og:description" content="The source for Dubai luxury real estate — curated apartments, villas and penthouses." />
+  <meta property="og:image" content="assets/props/1-G8vp5y85vM8f71-9qJCfUFmyLt7oKYs.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -62,23 +67,33 @@
   </section>
 
   <main>
-    <!-- Featured carousel -->
-    <section class="section" id="featured">
+    <!-- Featured sales -->
+    <section class="section" id="featured-sales">
       <div class="container">
-        <div class="section-head" data-reveal>
-          <p class="eyebrow">Featured collection</p>
+        <div class="section-head dn-head" data-reveal>
+          <p class="eyebrow">For sale</p>
           <div class="row">
-            <h2>Exclusive listings to PRIME</h2>
-            <div class="ex-arrows">
-              <button class="ex-arrow" data-ex-prev aria-label="Previous">‹</button>
-              <button class="ex-arrow" data-ex-next aria-label="Next">›</button>
-            </div>
+            <h2>Featured sales</h2>
+            <div class="dn-tabs" data-tabs="sales" role="tablist" aria-label="Filter sales"></div>
           </div>
+          <a class="link-gold dn-viewall" href="listings.html?status=For%20Sale">View all sales</a>
         </div>
+        <div class="dn-grid" id="grid-sales"><!-- injected --></div>
       </div>
-      <div class="ex-track" id="ex-track"><!-- cards injected --></div>
+    </section>
+
+    <!-- Featured rentals -->
+    <section class="section section-alt" id="featured-rentals">
       <div class="container">
-        <div class="grid-foot" data-reveal><a href="listings.html" class="link-gold">View all properties</a></div>
+        <div class="section-head dn-head" data-reveal>
+          <p class="eyebrow">For rent</p>
+          <div class="row">
+            <h2>Featured rentals</h2>
+            <div class="dn-tabs" data-tabs="rentals" role="tablist" aria-label="Filter rentals"></div>
+          </div>
+          <a class="link-gold dn-viewall" href="listings.html?status=For%20Rent">View all rentals</a>
+        </div>
+        <div class="dn-grid" id="grid-rentals"><!-- injected --></div>
       </div>
     </section>
 
@@ -214,7 +229,7 @@
           <input type="email" id="news-email" placeholder="Your email address" aria-label="Email address" />
           <button type="submit" aria-label="Subscribe">&rarr;</button>
         </form>
-        <label class="news-consent"><input type="checkbox" id="news-consent" /> I have read and agreed to the <a href="#">Privacy Policy</a>.</label>
+        <label class="news-consent"><input type="checkbox" id="news-consent" /> I have read and agreed to the <a href="legal.html#privacy">Privacy Policy</a>.</label>
         <p class="news-note" id="news-note" role="status"></p>
       </div>
       <div class="footer-col">
@@ -234,10 +249,10 @@
         <div class="socials" data-socials></div>
         <p class="footer-head footer-head--mt">Legal</p>
         <ul class="footer-links">
-          <li><a href="#">Terms &amp; conditions</a></li>
-          <li><a href="#">Privacy policy &amp; cookies</a></li>
-          <li><a href="#">Landlord letting fees</a></li>
-          <li><a href="#">Tenant letting fees</a></li>
+          <li><a href="legal.html#terms">Terms &amp; conditions</a></li>
+          <li><a href="legal.html#privacy">Privacy policy &amp; cookies</a></li>
+          <li><a href="legal.html#landlord-fees">Landlord letting fees</a></li>
+          <li><a href="legal.html#tenant-fees">Tenant letting fees</a></li>
         </ul>
       </div>
     </div>

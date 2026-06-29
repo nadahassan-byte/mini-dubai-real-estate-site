@@ -37,6 +37,11 @@
   const isFav = (id) => favs.includes(Number(id));
   const isCmp = (id) => cmp.includes(Number(id));
 
+  const RECENT_KEY = "prime_recent";
+  let recent = load(RECENT_KEY);
+  function recordView(id) { id = Number(id); recent = [id].concat(recent.filter((x) => x !== id)).slice(0, 12); store(RECENT_KEY, recent); }
+  function getRecent() { return recent.map(byId).filter(Boolean); }
+
   function toggleFav(id) {
     id = Number(id);
     favs = isFav(id) ? favs.filter((x) => x !== id) : favs.concat(id);
@@ -325,9 +330,9 @@
       if (e.target.closest("#cmp-clear")) { cmp = []; store(CMP_KEY, cmp); syncCmp(); return; }
       if (e.target.closest("[data-close]")) { hide("modal"); hide("cmp-modal"); return; }
 
-      // open property modal from any card / row carrying data-id
+      // open full property detail page from any card / row carrying data-id
       const opener = e.target.closest("[data-id]");
-      if (opener) { const it = byId(opener.dataset.id); if (it) openModal(it); }
+      if (opener && opener.dataset.id) { if (byId(opener.dataset.id)) location.href = "property.html?id=" + opener.dataset.id; }
     });
 
     document.addEventListener("keydown", (e) => {
@@ -341,8 +346,8 @@
 
     document.addEventListener("keydown", (e) => {
       if (e.key !== "Enter" && e.key !== " ") return;
-      const card = e.target.closest(".card, .ex-card");
-      if (card && card.dataset.id) { e.preventDefault(); const it = byId(card.dataset.id); if (it) openModal(it); }
+      const card = e.target.closest(".card, .ex-card, .dn-card");
+      if (card && card.dataset.id) { e.preventDefault(); if (byId(card.dataset.id)) location.href = "property.html?id=" + card.dataset.id; }
     });
   }
 
@@ -350,7 +355,8 @@
   window.PRIME = {
     LISTINGS, byId, aed, priceLabel, bedsLabel,
     heartHTML, cmpToggleHTML, isFav, isCmp,
-    observeReveals, openModal,
+    observeReveals, openModal, recordView, getRecent,
+    galleryFor: window.galleryFor,
     locations: () => Array.from(new Set(LISTINGS.map((l) => l.area))).sort(),
     types: () => Array.from(new Set(LISTINGS.map((l) => l.type))).sort(),
   };
