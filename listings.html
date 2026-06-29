@@ -79,7 +79,41 @@
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-inner">
+    <div class="container footer-grid">
+      <div class="footer-news">
+        <p class="footer-lead">Sign up for new listings, market insight and private viewings.</p>
+        <form class="news-form" id="news-form" novalidate>
+          <input type="email" id="news-email" placeholder="Your email address" aria-label="Email address" />
+          <button type="submit" aria-label="Subscribe">&rarr;</button>
+        </form>
+        <label class="news-consent"><input type="checkbox" id="news-consent" /> I have read and agreed to the <a href="#">Privacy Policy</a>.</label>
+        <p class="news-note" id="news-note" role="status"></p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Follow us in Dubai</p>
+        <div class="socials" data-socials></div>
+        <p class="footer-head footer-head--mt">Information</p>
+        <ul class="footer-links">
+          <li><a href="index.html#about">About PRIME</a></li>
+          <li><a href="listings.html">Properties</a></li>
+          <li><a href="index.html#calculator">Mortgage calculator</a></li>
+          <li><a href="index.html#contact">Contact us</a></li>
+          <li><a href="tel:+97140000000">Tel: +971 4 000 0000</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Follow us in Abu Dhabi</p>
+        <div class="socials" data-socials></div>
+        <p class="footer-head footer-head--mt">Legal</p>
+        <ul class="footer-links">
+          <li><a href="#">Terms &amp; conditions</a></li>
+          <li><a href="#">Privacy policy &amp; cookies</a></li>
+          <li><a href="#">Landlord letting fees</a></li>
+          <li><a href="#">Tenant letting fees</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-base">
       <img src="assets/prime-logo-light.png" alt="PRIME by betterhomes" class="footer-logo" />
       <p class="muted">© <span id="year"></span> PRIME by betterhomes. Demo project — listings are illustrative.</p>
     </div>

@@ -634,6 +634,34 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: 0.01em
 .toast { position: fixed; left: 50%; bottom: 32px; transform: translateX(-50%) translateY(20px); z-index: 200; background: var(--noir); color: var(--cream); padding: 14px 24px; font-size: 0.85rem; letter-spacing: 0.04em; opacity: 0; transition: opacity 0.3s var(--ease), transform 0.3s var(--ease); pointer-events: none; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+/* ---- Footer (multi-column) ---- */
+.site-footer { background: var(--noir); color: var(--muted-dk); padding: 84px 0 36px; }
+.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 56px; }
+.footer-lead { font-family: var(--serif); font-size: 1.6rem; line-height: 1.32; color: var(--cream); margin: 0 0 32px; max-width: 22ch; }
+.news-form { display: flex; border: 1px solid var(--line-dk); background: rgba(255,255,255,0.03); max-width: 420px; }
+.news-form input { flex: 1; background: transparent; border: 0; padding: 16px 18px; color: var(--cream); font: inherit; font-weight: 300; }
+.news-form input::placeholder { color: var(--muted-dk); }
+.news-form input:focus { outline: none; }
+.news-form button { background: transparent; border: 0; border-left: 1px solid var(--line-dk); color: var(--gold); width: 56px; font-size: 1.2rem; cursor: pointer; transition: background 0.3s var(--ease), color 0.3s var(--ease); }
+.news-form button:hover { background: var(--gold); color: var(--noir); }
+.news-consent { display: flex; align-items: center; gap: 10px; margin-top: 16px; font-size: 0.82rem; color: var(--muted-dk); }
+.news-consent a { color: var(--cream); text-decoration: underline; text-underline-offset: 3px; }
+.news-consent input { accent-color: var(--gold); width: 16px; height: 16px; }
+.news-note { min-height: 1.1em; margin: 10px 0 0; font-size: 0.8rem; }
+.news-note.ok { color: var(--gold); }
+.news-note.err { color: #d98b7a; }
+.footer-head { text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.72rem; color: var(--cream); margin: 0 0 18px; padding-bottom: 14px; border-bottom: 1px solid var(--line-dk); }
+.footer-head--mt { margin-top: 38px; }
+.socials { display: flex; gap: 12px; }
+.social { width: 44px; height: 44px; border: 1px solid var(--line-dk); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--muted-dk); transition: border-color 0.3s var(--ease), color 0.3s var(--ease), background 0.3s var(--ease); }
+.social:hover { border-color: var(--gold); color: var(--noir); background: var(--gold); }
+.social svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.footer-links { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.footer-links a { color: var(--muted-dk); font-size: 0.9rem; transition: color 0.3s var(--ease); }
+.footer-links a:hover { color: var(--gold); }
+.footer-base { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 64px; padding-top: 28px; border-top: 1px solid var(--line-dk); }
+.site-footer .muted { color: rgba(255,255,255,0.42); margin: 0; font-size: 0.78rem; letter-spacing: 0.06em; }
+
 /* ---- Responsive ---- */
 @media (max-width: 1024px) {
   .grid { grid-template-columns: repeat(2, 1fr); }
@@ -644,6 +672,8 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: 0.01em
   .card--featured .card-body { padding: 40px 36px; }
   .mc { grid-template-columns: 1fr; }
   .mc-form { border-right: 0; border-bottom: 1px solid var(--line); }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .footer-news { grid-column: 1 / -1; }
 }
 @media (max-width: 720px) {
   .container { padding: 0 24px; }
@@ -692,4 +722,6 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: 0.01em
   .cmp-bar-inner { padding: 14px 20px; gap: 16px; }
   .cmp-bar-actions { gap: 14px; }
   .cmp-modal-body { padding: 28px 22px 36px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 44px; }
+  .footer-base { margin-top: 44px; }
 }

@@ -91,10 +91,10 @@
           <h2>Distinguished neighbourhoods</h2>
         </div>
         <div class="hoods">
-          <a class="hood" href="listings.html?location=Downtown%20Dubai" data-reveal style="--img:url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=70')"><div class="hood-img"></div><span>Downtown Dubai</span><span class="hood-cta">View properties</span></a>
-          <a class="hood" href="listings.html?location=Dubai%20Marina" data-reveal data-reveal-delay="1" style="--img:url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=70')"><div class="hood-img"></div><span>Dubai Marina</span><span class="hood-cta">View properties</span></a>
-          <a class="hood" href="listings.html?location=Palm%20Jumeirah" data-reveal data-reveal-delay="2" style="--img:url('https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=800&q=70')"><div class="hood-img"></div><span>Palm Jumeirah</span><span class="hood-cta">View properties</span></a>
-          <a class="hood" href="listings.html?location=Business%20Bay" data-reveal data-reveal-delay="3" style="--img:url('https://images.unsplash.com/photo-1546412414-e1885259563a?auto=format&fit=crop&w=800&q=70')"><div class="hood-img"></div><span>Business Bay</span><span class="hood-cta">View properties</span></a>
+          <a class="hood" href="listings.html?location=Downtown%20Dubai" data-reveal style="--img:url('assets/props/1fkPuSuiUkcs4055pRbqy9txkMuHfUDdr.jpg')"><div class="hood-img"></div><span>Downtown Dubai</span><span class="hood-cta">View properties</span></a>
+          <a class="hood" href="listings.html?location=Dubai%20Marina" data-reveal data-reveal-delay="1" style="--img:url('assets/props/1-G8vp5y85vM8f71-9qJCfUFmyLt7oKYs.jpg')"><div class="hood-img"></div><span>Dubai Marina</span><span class="hood-cta">View properties</span></a>
+          <a class="hood" href="listings.html?location=Palm%20Jumeirah" data-reveal data-reveal-delay="2" style="--img:url('assets/props/1tYFkzWmd2fP1eJPg802tlnh57ApUBO8m.jpg')"><div class="hood-img"></div><span>Palm Jumeirah</span><span class="hood-cta">View properties</span></a>
+          <a class="hood" href="listings.html?location=Business%20Bay" data-reveal data-reveal-delay="3" style="--img:url('assets/props/1h6YpmJcbW9r6MluU0xU8dt2ophUuD1xw.jpg')"><div class="hood-img"></div><span>Business Bay</span><span class="hood-cta">View properties</span></a>
         </div>
       </div>
     </section>
@@ -207,7 +207,41 @@
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-inner">
+    <div class="container footer-grid">
+      <div class="footer-news">
+        <p class="footer-lead">Sign up for new listings, market insight and private viewings.</p>
+        <form class="news-form" id="news-form" novalidate>
+          <input type="email" id="news-email" placeholder="Your email address" aria-label="Email address" />
+          <button type="submit" aria-label="Subscribe">&rarr;</button>
+        </form>
+        <label class="news-consent"><input type="checkbox" id="news-consent" /> I have read and agreed to the <a href="#">Privacy Policy</a>.</label>
+        <p class="news-note" id="news-note" role="status"></p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Follow us in Dubai</p>
+        <div class="socials" data-socials></div>
+        <p class="footer-head footer-head--mt">Information</p>
+        <ul class="footer-links">
+          <li><a href="index.html#about">About PRIME</a></li>
+          <li><a href="listings.html">Properties</a></li>
+          <li><a href="index.html#calculator">Mortgage calculator</a></li>
+          <li><a href="index.html#contact">Contact us</a></li>
+          <li><a href="tel:+97140000000">Tel: +971 4 000 0000</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Follow us in Abu Dhabi</p>
+        <div class="socials" data-socials></div>
+        <p class="footer-head footer-head--mt">Legal</p>
+        <ul class="footer-links">
+          <li><a href="#">Terms &amp; conditions</a></li>
+          <li><a href="#">Privacy policy &amp; cookies</a></li>
+          <li><a href="#">Landlord letting fees</a></li>
+          <li><a href="#">Tenant letting fees</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-base">
       <img src="assets/prime-logo-light.png" alt="PRIME by betterhomes" class="footer-logo" />
       <p class="muted">© <span id="year"></span> PRIME by betterhomes. Demo project — listings are illustrative.</p>
     </div>

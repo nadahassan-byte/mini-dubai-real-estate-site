@@ -268,6 +268,36 @@
     if (yr) yr.textContent = new Date().getFullYear();
   }
 
+  // ---------- footer (socials + newsletter) ----------
+  const SOCIAL_ICONS = [
+    ["Instagram", '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>'],
+    ["X", '<svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20"/></svg>'],
+    ["Facebook", '<svg viewBox="0 0 24 24"><path d="M14 8h2.5M14 8c0-2 1-3 3-3h.5M14 8v3m0 0h-2.5M14 11v8"/></svg>'],
+    ["LinkedIn", '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 17v-7"/></svg>'],
+    ["YouTube", '<svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="3"/><path d="M11 9.5l3.5 2.5L11 14.5z" fill="currentColor" stroke="none"/></svg>'],
+  ];
+  function initFooter() {
+    const markup = SOCIAL_ICONS.map(([name, svg]) =>
+      `<a class="social" href="#" aria-label="${name}" title="${name}">${svg}</a>`).join("");
+    document.querySelectorAll("[data-socials]").forEach((el) => { el.innerHTML = markup; });
+
+    const form = document.getElementById("news-form");
+    if (form) {
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = document.getElementById("news-email");
+        const consent = document.getElementById("news-consent");
+        const note = document.getElementById("news-note");
+        const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+        if (!ok) { note.textContent = "Please enter a valid email address."; note.className = "news-note err"; return; }
+        if (consent && !consent.checked) { note.textContent = "Please accept the Privacy Policy to continue."; note.className = "news-note err"; return; }
+        note.textContent = "Thank you — you're on the list.";
+        note.className = "news-note ok";
+        form.reset();
+      });
+    }
+  }
+
   // ---------- reveal ----------
   let revealObserver = null;
   function observeReveals() {
@@ -328,6 +358,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     injectOverlays();
     initChrome();
+    initFooter();
     initEvents();
     syncFavs();
     syncCmp();
