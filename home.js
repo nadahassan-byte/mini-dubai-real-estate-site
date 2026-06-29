@@ -3,6 +3,45 @@
   "use strict";
   const P = window.PRIME;
 
+  // ---------- Immersive hero slideshow ----------
+  const heroSlides = document.getElementById("hero-slides");
+  if (heroSlides) {
+    const feat = P.LISTINGS.filter((l) => l.featured).slice(0, 5);
+    heroSlides.innerHTML = feat
+      .map((it, i) => `<div class="hero-slide${i === 0 ? " active" : ""}" style="--img:url('${it.img}')"></div>`)
+      .join("");
+    const slides = Array.from(heroSlides.children);
+    const eyebrow = document.getElementById("hero-eyebrow");
+    const title = document.getElementById("hero-title");
+    const price = document.getElementById("hero-price");
+    const center = document.getElementById("hero-center");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let idx = 0, timer = null;
+
+    function setSlide(n) {
+      idx = (n + feat.length) % feat.length;
+      slides.forEach((s, i) => s.classList.toggle("active", i === idx));
+      const it = feat[idx];
+      eyebrow.textContent = `${it.area} · ${it.status}`;
+      title.textContent = it.title;
+      price.innerHTML = P.priceLabel(it);
+      center.classList.remove("is-in"); void center.offsetWidth; center.classList.add("is-in");
+    }
+    function play() { if (reduce) return; stop(); timer = setInterval(() => setSlide(idx + 1), 6500); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+    const prev = document.querySelector("[data-hero-prev]");
+    const next = document.querySelector("[data-hero-next]");
+    if (prev) prev.addEventListener("click", () => { setSlide(idx - 1); play(); });
+    if (next) next.addEventListener("click", () => { setSlide(idx + 1); play(); });
+    const openCurrent = () => { const it = feat[idx]; if (it) P.openModal(it); };
+    center.addEventListener("click", openCurrent);
+    center.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openCurrent(); } });
+
+    setSlide(0);
+    play();
+  }
+
   // ---------- Featured carousel ----------
   const track = document.getElementById("ex-track");
   if (track) {

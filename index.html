@@ -36,19 +36,29 @@
   </header>
 
   <!-- Hero -->
-  <section class="hero">
-    <div class="container hero-inner">
-      <p class="eyebrow" data-reveal>The source for Dubai luxury real estate</p>
-      <h1 data-reveal data-reveal-delay="1">A collection of the city's<br />most exceptional homes</h1>
-      <p class="hero-sub" data-reveal data-reveal-delay="2">Curated apartments, villas and penthouses across Downtown, Marina, Palm Jumeirah and beyond — represented with discretion and care.</p>
-      <a href="listings.html" class="btn hero-cta" data-reveal data-reveal-delay="3">View the collection</a>
-      <div class="hero-stats" data-reveal data-reveal-delay="3">
-        <div><strong>450+</strong><span>Active listings</span></div>
-        <div><strong>18</strong><span>Neighbourhoods</span></div>
-        <div><strong>12 yrs</strong><span>In the market</span></div>
+  <section class="hero" id="hero" aria-label="Featured residences">
+    <div class="hero-slides" id="hero-slides"><!-- slides injected --></div>
+    <div class="hero-scrim"></div>
+    <button class="hero-nav hero-nav--prev" data-hero-prev aria-label="Previous residence">&larr;</button>
+    <button class="hero-nav hero-nav--next" data-hero-next aria-label="Next residence">&rarr;</button>
+    <div class="hero-overlay">
+      <div class="hero-center" id="hero-center" role="button" tabindex="0" aria-label="View this residence">
+        <p class="hero-eyebrow" id="hero-eyebrow">&nbsp;</p>
+        <h1 class="hero-title" id="hero-title">&nbsp;</h1>
+        <p class="hero-price" id="hero-price">&nbsp;</p>
       </div>
     </div>
-    <div class="scroll-cue">Scroll</div>
+    <div class="hero-bottom">
+      <div class="hero-cats">
+        <a class="hero-pill" href="listings.html?type=Apartment">Apartments</a>
+        <a class="hero-pill" href="listings.html?type=Villa">Villas</a>
+        <a class="hero-pill" href="listings.html?type=Penthouse">Penthouses</a>
+      </div>
+      <div class="hero-ctas">
+        <a class="hero-cta-pill ghost" href="#contact">Plan a viewing</a>
+        <a class="hero-cta-pill" href="listings.html">See available residences</a>
+      </div>
+    </div>
   </section>
 
   <main>
