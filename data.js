@@ -1,6 +1,7 @@
 // Illustrative Dubai property listings (made-up sample data). Prices in AED.
 // Photography: PRIME / betterhomes property shoots.
 const P_ = "assets/props/";
+// 20 distinct photos — every listing gets its own image.
 const IMG = {
   living:    P_ + "1fkPuSuiUkcs4055pRbqy9txkMuHfUDdr.jpg",
   stairLiv:  P_ + "1-G8vp5y85vM8f71-9qJCfUFmyLt7oKYs.jpg",
@@ -15,9 +16,16 @@ const IMG = {
   garden2:   P_ + "1e1ENawa1vz9hOKpaum9_NvQ7S-GyWR8L.jpg",
   kitchen2:  P_ + "1vxOomoVdc7tJmgoi3ogNzNhq4fYNyqsR.jpg",
   bath:      P_ + "1zOwWnmDgU4QN2li3psLbn_dL2d9NWhj1.jpg",
+  pool:      P_ + "14B0AIJgsHXJACSwQhVO8SJKbvFTLAP6F.jpg",
+  kitchen3:  P_ + "1iGm706cT2mRwJq6XP4vJdqjU51FQTjEp.jpg",
+  barstools: P_ + "1hBCMkF7CXR1sjt_YeOAT41px0_HusnL_.jpg",
+  dining:    P_ + "crop-dining.jpg",
+  terrace:   P_ + "crop-terrace.jpg",
+  entry:     P_ + "crop-entry.jpg",
+  poolside:  P_ + "crop-poolside.jpg",
 };
 // Ordered pool used to build a small gallery for each property's detail page.
-const IMG_POOL = [IMG.living, IMG.stairLiv, IMG.staircase, IMG.entrance, IMG.games, IMG.kitchen, IMG.lounge, IMG.bedroom, IMG.gym, IMG.garden, IMG.garden2, IMG.kitchen2, IMG.bath];
+const IMG_POOL = [IMG.living, IMG.stairLiv, IMG.staircase, IMG.entrance, IMG.games, IMG.kitchen, IMG.lounge, IMG.bedroom, IMG.gym, IMG.garden, IMG.garden2, IMG.kitchen2, IMG.bath, IMG.pool, IMG.kitchen3, IMG.barstools, IMG.dining, IMG.terrace, IMG.entry, IMG.poolside];
 
 const LISTINGS = [
   { id: 1, title: "Burj-view 2BR Apartment", type: "Apartment", area: "Downtown Dubai", price: 2950000, beds: 2, baths: 3, size: 1280, status: "For Sale", featured: true, tag: "New listing", added: "2026-06-20", img: IMG.living,
@@ -34,33 +42,33 @@ const LISTINGS = [
     blurb: "Family villa with landscaped garden, maid's room and golf-course community amenities including schools and parks." },
   { id: 7, title: "Sky Penthouse, Business Bay", type: "Penthouse", area: "Business Bay", price: 11900000, beds: 3, baths: 4, size: 2980, status: "For Sale", featured: true, tag: "Exclusive", added: "2026-06-05", img: IMG.games,
     blurb: "Full-floor penthouse with wraparound balcony, smart-home system and panoramic views of the Downtown skyline." },
-  { id: 8, title: "Marina 2BR — Furnished", type: "Apartment", area: "Dubai Marina", price: 145000, beds: 2, baths: 2, size: 1150, status: "For Rent", added: "2026-06-12", img: IMG.lounge,
+  { id: 8, title: "Marina 2BR — Furnished", type: "Apartment", area: "Dubai Marina", price: 145000, beds: 2, baths: 2, size: 1150, status: "For Rent", added: "2026-06-12", img: IMG.kitchen2,
     blurb: "Fully furnished two-bedroom steps from the Marina Walk, tram and JBR beach. Annual rent, chiller free." },
-  { id: 9, title: "Garden Villa, Palm Jumeirah", type: "Villa", area: "Palm Jumeirah", price: 18000000, beds: 4, baths: 5, size: 5600, status: "For Sale", featured: true, added: "2026-05-15", img: IMG.staircase,
+  { id: 9, title: "Garden Villa, Palm Jumeirah", type: "Villa", area: "Palm Jumeirah", price: 18000000, beds: 4, baths: 5, size: 5600, status: "For Sale", featured: true, added: "2026-05-15", img: IMG.terrace,
     blurb: "Renovated garden-home villa on a frond, private pool, open-plan living and a chef's kitchen with island." },
   { id: 10, title: "Mansion in Emirates Hills", type: "Villa", area: "Emirates Hills", price: 45000000, beds: 7, baths: 9, size: 14500, status: "For Sale", featured: true, tag: "Architect designed", added: "2026-06-01", img: IMG.gym,
     blurb: "Bespoke lakeside mansion in Dubai's most prestigious gated community, with cinema, spa and resort-style gardens." },
   { id: 11, title: "Townhouse in Dubai Hills", type: "Townhouse", area: "Dubai Hills Estate", price: 4350000, beds: 3, baths: 4, size: 2400, status: "For Sale", added: "2026-05-10", img: IMG.kitchen,
     blurb: "Bright corner townhouse facing the park, with a private garden, two parking bays and access to Dubai Hills Mall." },
-  { id: 12, title: "DIFC Loft Apartment", type: "Apartment", area: "DIFC", price: 3200000, beds: 2, baths: 2, size: 1420, status: "For Sale", added: "2026-04-28", img: IMG.kitchen2,
+  { id: 12, title: "DIFC Loft Apartment", type: "Apartment", area: "DIFC", price: 3200000, beds: 2, baths: 2, size: 1420, status: "For Sale", added: "2026-04-28", img: IMG.kitchen3,
     blurb: "Industrial-luxe loft in the financial district, double-height windows, walkable to galleries and fine dining." },
   { id: 13, title: "JBR Beachfront 3BR", type: "Apartment", area: "Jumeirah Beach Residence", price: 5600000, beds: 3, baths: 4, size: 1980, status: "For Sale", added: "2026-05-18", img: IMG.bath,
     blurb: "Direct beach-access apartment on The Walk, full sea views, upgraded interiors and a wraparound balcony." },
-  { id: 14, title: "Penthouse on the Palm", type: "Penthouse", area: "Palm Jumeirah", price: 31000000, beds: 4, baths: 5, size: 6100, status: "For Sale", featured: true, tag: "Exclusive", added: "2026-06-08", img: IMG.stairLiv,
+  { id: 14, title: "Penthouse on the Palm", type: "Penthouse", area: "Palm Jumeirah", price: 31000000, beds: 4, baths: 5, size: 6100, status: "For Sale", featured: true, tag: "Exclusive", added: "2026-06-08", img: IMG.dining,
     blurb: "Sky-mansion penthouse with private pool, 360° sea and skyline views and a dedicated lift lobby." },
-  { id: 15, title: "Family Villa, Dubai Hills", type: "Villa", area: "Dubai Hills Estate", price: 9750000, beds: 5, baths: 6, size: 6200, status: "For Sale", added: "2026-05-02", img: IMG.games,
+  { id: 15, title: "Family Villa, Dubai Hills", type: "Villa", area: "Dubai Hills Estate", price: 9750000, beds: 5, baths: 6, size: 6200, status: "For Sale", added: "2026-05-02", img: IMG.pool,
     blurb: "Modern family villa backing the golf course, with a basement, elevator, home gym and landscaped pool deck." },
-  { id: 16, title: "Downtown 3BR Residence", type: "Apartment", area: "Downtown Dubai", price: 6900000, beds: 3, baths: 4, size: 2150, status: "For Sale", added: "2026-04-20", img: IMG.living,
+  { id: 16, title: "Downtown 3BR Residence", type: "Apartment", area: "Downtown Dubai", price: 6900000, beds: 3, baths: 4, size: 2150, status: "For Sale", added: "2026-04-20", img: IMG.lounge,
     blurb: "Corner residence in a landmark tower, Opera District views, branded interiors and full hotel-style service." },
 
   // Rentals (annual, AED)
-  { id: 17, title: "Marina Penthouse — Rental", type: "Penthouse", area: "Dubai Marina", price: 480000, beds: 3, baths: 4, size: 2600, status: "For Rent", featured: true, tag: "New listing", added: "2026-06-21", img: IMG.lounge,
+  { id: 17, title: "Marina Penthouse — Rental", type: "Penthouse", area: "Dubai Marina", price: 480000, beds: 3, baths: 4, size: 2600, status: "For Rent", featured: true, tag: "New listing", added: "2026-06-21", img: IMG.entry,
     blurb: "Furnished marina penthouse with private terrace, residents' beach and concierge. Annual rent, flexible cheques." },
-  { id: 18, title: "Downtown 2BR — Rental", type: "Apartment", area: "Downtown Dubai", price: 185000, beds: 2, baths: 2, size: 1180, status: "For Rent", added: "2026-06-15", img: IMG.living,
+  { id: 18, title: "Downtown 2BR — Rental", type: "Apartment", area: "Downtown Dubai", price: 185000, beds: 2, baths: 2, size: 1180, status: "For Rent", added: "2026-06-15", img: IMG.staircase,
     blurb: "Bright two-bedroom with Burj views, walkable to Dubai Mall. Fully furnished, chiller-free, annual rent." },
-  { id: 19, title: "Palm Garden Villa — Rental", type: "Villa", area: "Palm Jumeirah", price: 1200000, beds: 4, baths: 5, size: 5200, status: "For Rent", featured: true, tag: "Exclusive", added: "2026-06-09", img: IMG.garden2,
+  { id: 19, title: "Palm Garden Villa — Rental", type: "Villa", area: "Palm Jumeirah", price: 1200000, beds: 4, baths: 5, size: 5200, status: "For Rent", featured: true, tag: "Exclusive", added: "2026-06-09", img: IMG.barstools,
     blurb: "Beachfront frond villa with private pool and garden, available furnished or unfurnished. Annual rent." },
-  { id: 20, title: "Business Bay Studio — Rental", type: "Apartment", area: "Business Bay", price: 68000, beds: 0, baths: 1, size: 440, status: "For Rent", added: "2026-06-19", img: IMG.bedroom,
+  { id: 20, title: "Business Bay Studio — Rental", type: "Apartment", area: "Business Bay", price: 68000, beds: 0, baths: 1, size: 440, status: "For Rent", added: "2026-06-19", img: IMG.poolside,
     blurb: "Smart studio with canal glimpses, gym and pool, moments from Bay Avenue. Annual rent, 4 cheques." }
 ];
 
