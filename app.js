@@ -377,7 +377,14 @@
         entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("in"); revealObserver.unobserve(en.target); } });
       }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
     }
-    els.forEach((el) => revealObserver.observe(el));
+    els.forEach((el) => {
+      // auto-stagger children inside a [data-stagger] container
+      if (!el.dataset.revealDelay && el.parentElement && el.parentElement.hasAttribute("data-stagger")) {
+        const i = Array.prototype.indexOf.call(el.parentElement.children, el);
+        el.style.transitionDelay = (Math.min(i, 8) * 0.07) + "s";
+      }
+      revealObserver.observe(el);
+    });
   }
 
   // ---------- global events ----------

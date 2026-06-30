@@ -42,11 +42,55 @@
     play();
   }
 
+  // ---------- Hero search ----------
+  const heroSearch = document.getElementById("hero-search");
+  if (heroSearch) {
+    let status = "all";
+    heroSearch.querySelectorAll(".hs-tab").forEach((t) => t.addEventListener("click", () => {
+      status = t.dataset.status;
+      heroSearch.querySelectorAll(".hs-tab").forEach((x) => { const on = x === t; x.classList.toggle("is-active", on); x.setAttribute("aria-selected", String(on)); });
+    }));
+    heroSearch.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const q = document.getElementById("hs-input").value.trim();
+      const p = new URLSearchParams();
+      if (status !== "all") p.set("status", status);
+      if (q) p.set("q", q);
+      const qs = p.toString();
+      location.href = "listings.html" + (qs ? "?" + qs : "");
+    });
+  }
+
+  // ---------- Count-up stats ----------
+  const counters = document.querySelectorAll("[data-count]");
+  if (counters.length) {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const fmt = (n, dec) => new Intl.NumberFormat("en-AE", { minimumFractionDigits: dec, maximumFractionDigits: dec }).format(n);
+    const run = (el) => {
+      const target = parseFloat(el.dataset.count) || 0;
+      const dec = parseInt(el.dataset.decimals || "0", 10);
+      const pre = el.dataset.prefix || "", suf = el.dataset.suffix || "";
+      if (reduce) { el.textContent = pre + fmt(target, dec) + suf; return; }
+      const dur = 1700, t0 = performance.now();
+      const tick = (now) => {
+        const p = Math.min(1, (now - t0) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = pre + fmt(target * eased, dec) + suf;
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((ents) => ents.forEach((en) => { if (en.isIntersecting) { run(en.target); io.unobserve(en.target); } }), { threshold: 0.4 });
+      counters.forEach((c) => io.observe(c));
+    } else counters.forEach(run);
+  }
+
   // ---------- Featured sales & rentals (Domus Nova style) ----------
   function dnCard(it) {
     const meta = `${P.bedsLabel(it.beds)} · ${it.type}`;
     return `
-      <article class="dn-card" data-id="${it.id}" tabindex="0" role="button" aria-label="View ${it.title}">
+      <article class="dn-card" data-id="${it.id}" tabindex="0" role="button" aria-label="View ${it.title}" data-reveal>
         <div class="dn-media">
           ${it.tag ? `<span class="dn-tag">${it.tag}</span>` : ""}
           ${P.heartHTML(it.id)}

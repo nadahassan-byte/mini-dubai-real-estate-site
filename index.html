@@ -54,14 +54,28 @@
       </div>
     </div>
     <div class="hero-bottom">
-      <div class="hero-cats">
-        <a class="hero-pill" href="listings.html?type=Apartment">Apartments</a>
-        <a class="hero-pill" href="listings.html?type=Villa">Villas</a>
-        <a class="hero-pill" href="listings.html?type=Penthouse">Penthouses</a>
-      </div>
-      <div class="hero-ctas">
-        <a class="hero-cta-pill ghost" href="#contact">Plan a viewing</a>
-        <a class="hero-cta-pill" href="listings.html">See available residences</a>
+      <form class="hero-search" id="hero-search" role="search">
+        <div class="hs-seg" role="tablist" aria-label="Buy or rent">
+          <button type="button" class="hs-tab is-active" data-status="all" role="tab" aria-selected="true">All</button>
+          <button type="button" class="hs-tab" data-status="For Sale" role="tab" aria-selected="false">Buy</button>
+          <button type="button" class="hs-tab" data-status="For Rent" role="tab" aria-selected="false">Rent</button>
+        </div>
+        <div class="hs-field">
+          <svg class="hs-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input id="hs-input" type="text" placeholder="Search by community, type or keyword…" aria-label="Search properties" />
+        </div>
+        <button type="submit" class="hs-btn">Search</button>
+      </form>
+      <div class="hero-bottom-row">
+        <div class="hero-cats">
+          <a class="hero-pill" href="listings.html?type=Apartment">Apartments</a>
+          <a class="hero-pill" href="listings.html?type=Villa">Villas</a>
+          <a class="hero-pill" href="listings.html?type=Penthouse">Penthouses</a>
+        </div>
+        <div class="hero-ctas">
+          <a class="hero-cta-pill ghost" href="#contact">Plan a viewing</a>
+          <a class="hero-cta-pill" href="listings.html">See available residences</a>
+        </div>
       </div>
     </div>
   </section>
@@ -78,7 +92,31 @@
           </div>
           <a class="link-gold dn-viewall" href="listings.html?status=For%20Sale">View all sales</a>
         </div>
-        <div class="dn-grid" id="grid-sales"><!-- injected --></div>
+        <div class="dn-grid" id="grid-sales" data-stagger><!-- injected --></div>
+      </div>
+    </section>
+
+    <!-- Explore by lifestyle -->
+    <section class="section section-alt collections" id="collections">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Explore by lifestyle</p>
+          <div class="row"><h2>Find your address</h2></div>
+        </div>
+      </div>
+      <div class="col-scroll" data-stagger>
+        <a class="col-tile" data-reveal href="listings.html?location=Palm%20Jumeirah" style="--img:url('assets/props/1IZglcj8FkipsZVq6yMzXuLaGP8KEG3nW.jpg')">
+          <div class="col-bg"></div><div class="col-cap"><span class="col-kicker">Beachfront</span><span class="col-title">Palm Jumeirah</span></div></a>
+        <a class="col-tile" data-reveal href="listings.html?type=Penthouse" style="--img:url('assets/props/1-G8vp5y85vM8f71-9qJCfUFmyLt7oKYs.jpg')">
+          <div class="col-bg"></div><div class="col-cap"><span class="col-kicker">Sky-high</span><span class="col-title">Penthouses</span></div></a>
+        <a class="col-tile" data-reveal href="listings.html?location=Dubai%20Marina" style="--img:url('assets/props/1tDU4USMpOObW4kyzWUF3sSHfB7MUm3Q2.jpg')">
+          <div class="col-bg"></div><div class="col-cap"><span class="col-kicker">Waterfront</span><span class="col-title">Dubai Marina</span></div></a>
+        <a class="col-tile" data-reveal href="listings.html?type=Villa" style="--img:url('assets/props/14B0AIJgsHXJACSwQhVO8SJKbvFTLAP6F.jpg')">
+          <div class="col-bg"></div><div class="col-cap"><span class="col-kicker">Private</span><span class="col-title">Signature villas</span></div></a>
+        <a class="col-tile" data-reveal href="listings.html?location=Dubai%20Hills%20Estate" style="--img:url('assets/props/crop-terrace.jpg')">
+          <div class="col-bg"></div><div class="col-cap"><span class="col-kicker">Greens &amp; fairways</span><span class="col-title">Golf communities</span></div></a>
+        <a class="col-tile" data-reveal href="listings.html?location=Downtown%20Dubai" style="--img:url('assets/props/1fkPuSuiUkcs4055pRbqy9txkMuHfUDdr.jpg')">
+          <div class="col-bg"></div><div class="col-cap"><span class="col-kicker">Iconic</span><span class="col-title">Downtown towers</span></div></a>
       </div>
     </section>
 
@@ -93,7 +131,31 @@
           </div>
           <a class="link-gold dn-viewall" href="listings.html?status=For%20Rent">View all rentals</a>
         </div>
-        <div class="dn-grid" id="grid-rentals"><!-- injected --></div>
+        <div class="dn-grid" id="grid-rentals" data-stagger><!-- injected --></div>
+      </div>
+    </section>
+
+    <!-- Stats band -->
+    <section class="section section-dark stats" id="stats">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat" data-reveal>
+            <p class="stat-num"><span data-count="4.2" data-prefix="AED " data-suffix="B+" data-decimals="1">AED 0</span></p>
+            <p class="stat-label">In residences placed</p>
+          </div>
+          <div class="stat" data-reveal data-reveal-delay="1">
+            <p class="stat-num"><span data-count="1200" data-suffix="+">0</span></p>
+            <p class="stat-label">Private clients served</p>
+          </div>
+          <div class="stat" data-reveal data-reveal-delay="2">
+            <p class="stat-num"><span data-count="18">0</span></p>
+            <p class="stat-label">Prime communities</p>
+          </div>
+          <div class="stat" data-reveal data-reveal-delay="3">
+            <p class="stat-num"><span data-count="24" data-suffix="h">0</span></p>
+            <p class="stat-label">Valuation turnaround</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -110,6 +172,17 @@
           <a class="hood" href="listings.html?location=Dubai%20Marina" data-reveal data-reveal-delay="1" style="--img:url('assets/props/1-G8vp5y85vM8f71-9qJCfUFmyLt7oKYs.jpg')"><div class="hood-img"></div><span>Dubai Marina</span><span class="hood-cta">View properties</span></a>
           <a class="hood" href="listings.html?location=Palm%20Jumeirah" data-reveal data-reveal-delay="2" style="--img:url('assets/props/1tYFkzWmd2fP1eJPg802tlnh57ApUBO8m.jpg')"><div class="hood-img"></div><span>Palm Jumeirah</span><span class="hood-cta">View properties</span></a>
           <a class="hood" href="listings.html?location=Business%20Bay" data-reveal data-reveal-delay="3" style="--img:url('assets/props/1h6YpmJcbW9r6MluU0xU8dt2ophUuD1xw.jpg')"><div class="hood-img"></div><span>Business Bay</span><span class="hood-cta">View properties</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Brand marquee -->
+    <section class="marquee-band" aria-label="Developers represented">
+      <p class="marquee-kicker">Representing Dubai's finest developers</p>
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+          <span>Emaar</span><i>✦</i><span>Nakheel</span><i>✦</i><span>DAMAC</span><i>✦</i><span>Meraas</span><i>✦</i><span>Sobha Realty</span><i>✦</i><span>Ellington</span><i>✦</i><span>Omniyat</span><i>✦</i><span>Select Group</span><i>✦</i><span>Aldar</span><i>✦</i><span>Binghatti</span><i>✦</i>
+          <span>Emaar</span><i>✦</i><span>Nakheel</span><i>✦</i><span>DAMAC</span><i>✦</i><span>Meraas</span><i>✦</i><span>Sobha Realty</span><i>✦</i><span>Ellington</span><i>✦</i><span>Omniyat</span><i>✦</i><span>Select Group</span><i>✦</i><span>Aldar</span><i>✦</i><span>Binghatti</span><i>✦</i>
         </div>
       </div>
     </section>
