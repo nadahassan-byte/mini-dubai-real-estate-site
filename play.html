@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Break the ceiling — careers at betterhomes</title>
+  <meta name="description" content="Trust better. Get better. Play Break the ceiling — smash through every career tier, climb the leaderboard, and start a confidential conversation about a brokerage role at betterhomes." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="betterhomes careers" />
+  <meta property="og:title" content="Break the ceiling — careers at betterhomes" />
+  <meta property="og:description" content="How high can you climb? Smash through every career tier, top the leaderboard, and leave a ceiling behind." />
+  <link rel="stylesheet" href="play.css" />
+</head>
+<body class="page-play">
+  <!-- Header -->
+  <header class="bh-header" id="top">
+    <div class="bh-container bh-header-inner">
+      <a href="play.html#top" class="bh-brand" aria-label="betterhomes careers — home">
+        betterhomes
+        <span class="bh-brand-sub">careers</span>
+      </a>
+      <nav class="bh-nav" aria-label="Primary">
+        <a href="#how">How it plays</a>
+        <a href="#leaderboard">Leaderboard</a>
+        <a href="#play" class="bh-nav-cta">Play now</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="bh-hero" id="hero">
+      <div class="bh-hero-glow" aria-hidden="true"></div>
+      <div class="bh-container bh-hero-inner">
+        <p class="bh-eyebrow">Trust better. Get better</p>
+        <h1 class="bh-hero-title">You&rsquo;re not leaving a job.<br />You&rsquo;re leaving a ceiling.</h1>
+        <p class="bh-hero-sub">
+          So break a few. <strong>Break the ceiling</strong> is a 60-second climb through every tier of a
+          broker&rsquo;s career &mdash; new broker to director. Smash higher, earn more, top the board.
+          The most ambitious people don&rsquo;t want promises. They want proof. Start climbing.
+        </p>
+        <div class="bh-hero-ctas">
+          <a href="#play" class="bh-btn bh-btn--cta" data-scroll-play>Play now</a>
+          <a href="#how" class="bh-btn bh-btn--ghost">How it plays</a>
+        </div>
+        <ul class="bh-hero-stats">
+          <li><strong>2,500+</strong><span>five-star reviews</span></li>
+          <li><strong>1986</strong><span>homegrown since</span></li>
+          <li><strong>4</strong><span>tiers to break</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Game stage -->
+    <section class="bh-stage-wrap" id="play">
+      <div class="bh-container">
+        <div class="bh-stage" id="stage">
+          <!-- HUD -->
+          <div class="bh-hud" id="hud" aria-hidden="false">
+            <div class="bh-hud-tier">
+              <span class="bh-hud-label">Career tier</span>
+              <span class="bh-hud-value" id="hud-tier">New broker</span>
+            </div>
+            <div class="bh-hud-height">
+              <span class="bh-hud-label">Height</span>
+              <span class="bh-hud-value" id="hud-height">0 m</span>
+            </div>
+            <div class="bh-hud-earn">
+              <span class="bh-hud-label">Earnings tier</span>
+              <span class="bh-hud-value" id="hud-earn">AED 0</span>
+            </div>
+          </div>
+
+          <!-- Canvas -->
+          <canvas id="game" class="bh-canvas" aria-label="Break the ceiling game"></canvas>
+
+          <!-- Start overlay -->
+          <div class="bh-overlay" id="overlay-start">
+            <div class="bh-overlay-card">
+              <p class="bh-overlay-eyebrow">Break the ceiling</p>
+              <h2 class="bh-overlay-title">How high can you climb?</h2>
+              <p class="bh-overlay-text">
+                You rise automatically. <strong>Steer left and right</strong> to hit the
+                <span class="bh-weakpoint-chip">weak point</span> in each ceiling and smash through it.
+                Miss it &mdash; hit solid concrete &mdash; and the climb ends.
+              </p>
+              <p class="bh-overlay-controls">
+                <span>Drag / hold</span> on the shaft &middot; or use <span>&larr; &rarr;</span> arrow keys
+              </p>
+              <button class="bh-btn bh-btn--cta bh-btn--lg" id="btn-start">Start climbing</button>
+            </div>
+          </div>
+
+          <!-- Game over overlay -->
+          <div class="bh-overlay bh-overlay--result is-hidden" id="overlay-over">
+            <div class="bh-overlay-card">
+              <p class="bh-overlay-eyebrow" id="over-eyebrow">Ceiling reached</p>
+              <h2 class="bh-overlay-title"><span id="over-height">0</span> m</h2>
+              <p class="bh-overlay-result-tier">You climbed to <strong id="over-tier">New broker</strong></p>
+              <p class="bh-overlay-text" id="over-msg">Not bad. The real version has no scoreboard limit.</p>
+              <div class="bh-overlay-actions">
+                <button class="bh-btn bh-btn--cta" id="btn-save">Save my score</button>
+                <button class="bh-btn bh-btn--ghost" id="btn-retry">Climb again</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lead capture overlay -->
+          <div class="bh-overlay bh-overlay--form is-hidden" id="overlay-lead">
+            <div class="bh-overlay-card bh-overlay-card--form">
+              <p class="bh-overlay-eyebrow">Join the leaderboard</p>
+              <h2 class="bh-overlay-title bh-overlay-title--sm">Save <span id="lead-height">0</span> m to the board</h2>
+              <p class="bh-overlay-text bh-overlay-text--sm">
+                One step. Your score goes live, and a talent partner can pick up the conversation
+                whenever you&rsquo;re ready &mdash; on your terms, confidentially.
+              </p>
+              <form class="bh-form" id="lead-form" novalidate>
+                <div class="bh-field">
+                  <label for="lead-name">Name</label>
+                  <input id="lead-name" name="name" type="text" autocomplete="name" required />
+                </div>
+                <div class="bh-field">
+                  <label for="lead-email">Email</label>
+                  <input id="lead-email" name="email" type="email" autocomplete="email" required />
+                </div>
+                <div class="bh-field">
+                  <label for="lead-whatsapp">WhatsApp <span class="bh-optional">(optional)</span></label>
+                  <input id="lead-whatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="+971 …" />
+                </div>
+                <div class="bh-field">
+                  <label for="lead-segment">Which describes you?</label>
+                  <select id="lead-segment" name="segment" required>
+                    <option value="" selected disabled>Choose one…</option>
+                    <option value="new">New to brokerage</option>
+                    <option value="returning">Returning broker</option>
+                    <option value="experienced">Experienced broker</option>
+                    <option value="relocating">Relocating to Dubai</option>
+                  </select>
+                </div>
+                <div class="bh-field">
+                  <label for="lead-office">Play for an office <span class="bh-optional">(optional)</span></label>
+                  <select id="lead-office" name="office">
+                    <option value="" selected>No office</option>
+                    <option value="Marina">Dubai Marina</option>
+                    <option value="Downtown">Downtown</option>
+                    <option value="Business Bay">Business Bay</option>
+                    <option value="JVC">JVC</option>
+                    <option value="Abu Dhabi">Abu Dhabi</option>
+                  </select>
+                </div>
+                <label class="bh-consent">
+                  <input type="checkbox" id="lead-consent" required />
+                  <span>I agree to betterhomes contacting me about brokerage opportunities and storing my details in line with the <a href="legal.html#privacy" target="_blank" rel="noopener">privacy policy</a>. I can opt out any time.</span>
+                </label>
+                <button type="submit" class="bh-btn bh-btn--cta bh-btn--lg">Save score &amp; join</button>
+                <p class="bh-form-note" id="lead-note" role="status"></p>
+              </form>
+            </div>
+          </div>
+
+          <!-- Saved / share overlay -->
+          <div class="bh-overlay bh-overlay--saved is-hidden" id="overlay-saved">
+            <div class="bh-overlay-card">
+              <p class="bh-overlay-eyebrow">You&rsquo;re on the board</p>
+              <h2 class="bh-overlay-title bh-overlay-title--sm" id="saved-rank">Weekly rank #—</h2>
+              <canvas id="share-card" class="bh-share-card" width="600" height="315" aria-label="Your score card"></canvas>
+              <div class="bh-overlay-actions">
+                <button class="bh-btn bh-btn--cta" id="btn-share">Share my climb</button>
+                <button class="bh-btn bh-btn--ghost" id="btn-replay">Climb again</button>
+              </div>
+              <p class="bh-form-note" id="share-note" role="status"></p>
+              <a class="bh-talklink" href="#talk">Or talk to a talent partner now &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it plays -->
+    <section class="bh-section" id="how">
+      <div class="bh-container">
+        <p class="bh-eyebrow">How it plays</p>
+        <h2 class="bh-section-title">Every ceiling is a real one</h2>
+        <div class="bh-tiers" id="tier-legend"><!-- injected --></div>
+        <p class="bh-section-note">
+          The tiers, the earnings jumps and the climb are the campaign idea made playable: progression is real,
+          the ceiling is the only thing that&rsquo;s artificial &mdash; and here, you get to break it.
+        </p>
+      </div>
+    </section>
+
+    <!-- Leaderboard -->
+    <section class="bh-section bh-section--alt" id="leaderboard">
+      <div class="bh-container">
+        <p class="bh-eyebrow">The board</p>
+        <h2 class="bh-section-title">Leaderboard</h2>
+        <div class="bh-board-tabs" role="tablist" aria-label="Leaderboard view">
+          <button class="bh-board-tab is-active" data-board="weekly" role="tab" aria-selected="true">Weekly</button>
+          <button class="bh-board-tab" data-board="global" role="tab" aria-selected="false">All-time</button>
+          <button class="bh-board-tab" data-board="office" role="tab" aria-selected="false">Office vs office</button>
+        </div>
+        <ol class="bh-board" id="board"><!-- injected --></ol>
+        <p class="bh-board-empty is-hidden" id="board-empty">
+          No climbs yet this week. Be the first name on the board.
+        </p>
+        <p class="bh-section-note">
+          Weekly board resets every Monday 00:00 GST. Top of the week wins a genuine reward &mdash;
+          an interview fast-track, merch, or a donation in your name.
+        </p>
+      </div>
+    </section>
+
+    <!-- Talk / close -->
+    <section class="bh-section bh-talk" id="talk">
+      <div class="bh-container bh-talk-inner">
+        <div>
+          <p class="bh-eyebrow">Ready when you are</p>
+          <h2 class="bh-section-title">Leave the scoreboard. Keep the ceiling broken.</h2>
+          <p class="bh-talk-text">
+            The game is the easy part. The real climb is a brokerage career with leadership, training and
+            a brand behind you. No pressure, no funnel &mdash; just a confidential conversation on the channel
+            you already use.
+          </p>
+        </div>
+        <div class="bh-talk-actions">
+          <a class="bh-btn bh-btn--cta bh-btn--lg" href="https://wa.me/97140000000?text=I%20played%20Break%20the%20ceiling%20%E2%80%94%20tell%20me%20more%20about%20broker%20roles" target="_blank" rel="noopener" data-analytics="whatsapp_click">Start a chat on WhatsApp</a>
+          <a class="bh-btn bh-btn--ghost" href="#play" data-scroll-play>Climb again</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bh-footer">
+    <div class="bh-container bh-footer-inner">
+      <p class="bh-footer-brand">betterhomes</p>
+      <p class="bh-footer-tag">Trust better. Get better &middot; Homegrown since 1986</p>
+      <p class="bh-footer-note">
+        Demo activation. Scores are stored on this device only; no data leaves your browser unless a
+        CRM endpoint is configured. © <span id="bh-year"></span> betterhomes.
+      </p>
+    </div>
+  </footer>
+
+  <script src="play.js"></script>
+</body>
+</html>

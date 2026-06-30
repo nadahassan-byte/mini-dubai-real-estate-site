@@ -21,6 +21,42 @@ A small, self-contained real-estate website for browsing Dubai properties. Built
 | `styles.css` | All styling (no framework) |
 | `data.js` | Listing data — edit this to add/remove properties |
 | `script.js` | Rendering, search, filters, modal, contact form |
+| `play.html` | **Careers game hub** — "Break the ceiling" recruitment game (campaign: *Trust better. Get better*) |
+| `play.css` | Styling for the careers game hub (campaign brand palette) |
+| `play.js` | Game loop, career-tier progression, leaderboard, lead capture, share card |
+
+## Careers game — "Break the ceiling"
+
+A self-contained recruitment activation at `play.html` for the *Trust better. Get
+better* campaign. It is independent of the property site (its own brand palette and
+fonts) and needs no build step.
+
+- **The game** — an endless vertical climber. You rise automatically; steer left/right
+  (drag/hold or arrow keys) to hit the **weak point** in each ceiling and smash through.
+  Hit solid concrete and the run ends. Height = score.
+- **Progression** — each height milestone breaks into the next career tier
+  (New broker → Top performer → Team lead → Director) with a rising earnings indicator.
+- **Lead capture (the point of the build)** — anyone can play; saving a score opens a
+  one-step opt-in (name, email/WhatsApp, "which describes you?" segment, consent). Entries
+  go to the leaderboard and, if configured, to a CRM.
+- **Leaderboards** — weekly (resets Mon 00:00 GST), all-time, and office-vs-office.
+- **Sharing** — a branded score card is rendered to canvas for native share / clipboard.
+- **`?code=`** — links a physical-puzzle recipient to their lead profile.
+
+### Wiring a real backend
+
+The board and leads are stored in `localStorage` for the demo. To connect a backend,
+set the config at the top of `play.js` (or before it loads):
+
+```js
+window.BH.config.crmWebhook = "https://crm.example/api/leads"; // POST lead payload
+window.BH.config.scoreApi   = "https://api.example/scores";    // server-validated submit
+```
+
+Analytics events (`play_start`, `play_end`, `save_clicked`, `score_saved`,
+`lead_captured`, `share_clicked`) are emitted via `console.debug` / `window.dataLayer` —
+point them at your tracker. Adding another game module (Cast for the catch, the puzzle,
+the diagnostic) reuses the same leaderboard, capture and share code unchanged.
 
 ## Run locally
 
