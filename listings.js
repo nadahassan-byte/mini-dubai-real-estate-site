@@ -242,5 +242,17 @@
     const b = e.target.closest(".vt-btn"); if (b) setView(b.dataset.view);
   });
 
+  // ---- sticky filter bar: add depth once it pins under the header ----
+  const filtersBar = document.getElementById("filters");
+  if (filtersBar && "IntersectionObserver" in window) {
+    const sentinel = document.createElement("div");
+    sentinel.style.cssText = "position:absolute;width:1px;height:1px;pointer-events:none;";
+    filtersBar.parentNode.insertBefore(sentinel, filtersBar);
+    new IntersectionObserver(
+      ([e]) => filtersBar.classList.toggle("is-stuck", !e.isIntersecting),
+      { rootMargin: "-85px 0px 0px 0px", threshold: 0 }
+    ).observe(sentinel);
+  }
+
   render();
 })();

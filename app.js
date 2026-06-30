@@ -304,12 +304,22 @@
 
   // ---------- shared header / chrome ----------
   function initChrome() {
+    // scroll progress indicator (thin gold bar at the very top)
+    const progress = document.createElement("div");
+    progress.className = "scroll-progress";
+    progress.setAttribute("aria-hidden", "true");
+    document.body.appendChild(progress);
+
     const header = document.querySelector(".site-header");
-    if (header) {
-      const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 80);
-      window.addEventListener("scroll", onScroll, { passive: true });
-      onScroll();
-    }
+    const onScroll = () => {
+      if (header) header.classList.toggle("scrolled", window.scrollY > 80);
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      progress.style.transform = "scaleX(" + (max > 0 ? Math.min(1, window.scrollY / max) : 0) + ")";
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    onScroll();
     // currency selector — injected so every page gets it without HTML edits
     const actions = document.querySelector(".header-actions");
     if (actions && !actions.querySelector("[data-currency]")) {
